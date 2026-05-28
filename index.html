@@ -246,11 +246,12 @@ async function submitPin(){
   if(pin.length<4){ document.getElementById('pin-err').textContent='Minimum 4 chiffres'; return; }
   const existing = getCfg(`pin_${pickingUser}`);
   if(!existing){
-    setCfg(`pin_${pickingUser}`, hashPin(pin));
-    await apiWrite();
+    const hashed = hashPin(pin);
+    setCfg(`pin_${pickingUser}`, hashed);
+    await jsonp(`${API}?action=setpin&key=pin_${pickingUser}&value=${hashed}`);
     loginAs(pickingUser);
   } else {
-    if(hashPin(pin)===existing){ loginAs(pickingUser); }
+    if(hashPin(pin)===String(existing)){ loginAs(pickingUser); }
     else { document.getElementById('pin-err').textContent='Code incorrect'; document.getElementById('pin-input').value=''; }
   }
 }
