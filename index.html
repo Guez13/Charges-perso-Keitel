@@ -404,7 +404,7 @@ async function saveVariable(){
   const btn=document.getElementById('add-btn');
   btn.innerHTML='<span class="spinner"></span>Enregistrement…';
   btn.disabled=true;
-  const entry = {id:uid(),person:addPerson,category:cat,label,amount,date,month:date.slice(0,7)};
+  const entry = {id:uid(),person:addPerson,category:cat,label,amount,date:date,month:date.slice(0,7)};
   DB.variable.push(entry);
   await apiAddVariable(entry);
   btn.innerHTML='✓ Enregistré !';
@@ -555,7 +555,11 @@ async function init(){
     if(d && !d.error){
       DB.config = d.config||[];
       DB.fixed = (d.fixed||[]).map(r=>({...r, amount:Number(r.amount), startMonth:String(r.startMonth).slice(0,7)}));
-      DB.variable = (d.variable||[]).map(r=>({...r, amount:Number(r.amount), date:String(r.date).slice(0,10), month:String(r.month).slice(0,7)}));
+      DB.variable = (d.variable||[]).map(r=>{
+        const date = String(r.date).slice(0,10);
+        const month = date.slice(0,7);
+        return {...r, amount:Number(r.amount), date, month};
+      });
     }
   } catch(e){ console.warn('Init error',e); }
 }
