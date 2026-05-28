@@ -540,13 +540,27 @@ async function changePin(){
 }
 
 // ─── INIT ────────────────────────────────────────────────
+function cleanDate(val) {
+  if (!val) return val;
+  const s = String(val);
+  if (s.includes('T')) return s.slice(0, 10);
+  return s;
+}
+function cleanMonth(val) {
+  if (!val) return val;
+  const s = String(val);
+  if (s.includes('T')) return s.slice(0, 7);
+  if (s.length > 7) return s.slice(0, 7);
+  return s;
+}
+
 async function init(){
   try {
     const d = await apiRead();
     if(d && !d.error){
       DB.config = d.config||[];
-      DB.fixed = (d.fixed||[]).map(r=>({...r,amount:Number(r.amount)}));
-      DB.variable = (d.variable||[]).map(r=>({...r,amount:Number(r.amount)}));
+      DB.fixed = (d.fixed||[]).map(r=>({...r, amount:Number(r.amount), startMonth:cleanMonth(r.startMonth)}));
+      DB.variable = (d.variable||[]).map(r=>({...r, amount:Number(r.amount), date:cleanDate(r.date), month:cleanMonth(r.month)}));
     }
   } catch(e){ console.warn('Init error',e); }
 }
