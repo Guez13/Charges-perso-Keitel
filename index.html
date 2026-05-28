@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Keitel — Charges</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#0f172a;color:#f1f5f9;font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#app{width:100%;max-width:440px;min-height:100vh;display:flex;flex-direction:column;position:relative}
+button{cursor:pointer;font-family:inherit}
+input,select{font-family:inherit;outline:none}
+.surface{background:#1e293b}
+.border{border:1px solid #334155}
+.muted{color:#94a3b8}
+.dim{color:#64748b}
+
+/* NAV */
+#bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;background:#1e293b;border-top:1px solid #334155;display:flex;z-index:100}
+.nav-btn{flex:1;padding:10px 0;background:none;border:none;color:#64748b;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;letter-spacing:0.3px}
+.nav-btn.active{color:#60a5fa}
+.nav-add-icon{background:#2563eb;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:white;font-weight:300;line-height:1}
+
+/* HEADER */
+#header{background:#1e293b;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #334155;flex-shrink:0}
+.header-title-sub{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px}
+.header-title{font-size:16px;font-weight:700}
+.user-badge{border-radius:20px;padding:5px 14px;font-size:13px;font-weight:700}
+.logout-btn{background:none;border:none;color:#64748b;font-size:20px;line-height:1;padding:2px 4px}
+
+/* PAGES */
+.page{display:none;padding:16px;padding-bottom:80px;flex:1;overflow-y:auto}
+.page.active{display:block}
+
+/* FORMS */
+.lbl{font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
+.inp{width:100%;background:#1e293b;border:1px solid #334155;border-radius:10px;padding:12px 14px;font-size:14px;color:#f1f5f9;margin-bottom:12px}
+.inp:focus{border-color:#3b82f6}
+select.inp option{background:#1e293b}
+
+/* CARDS */
+.card{background:#1e293b;border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+
+/* SPINNER */
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid #334155;border-top-color:#60a5fa;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LOGIN */
+#login-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;width:100%;max-width:440px}
+.pin-input{width:100%;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:14px;font-size:28px;color:#f1f5f9;text-align:center;letter-spacing:10px}
+.btn-primary{width:100%;background:#2563eb;color:white;border:none;border-radius:14px;padding:16px;font-size:15px;font-weight:700}
+.btn-secondary{background:none;border:none;color:#64748b;font-size:13px;margin-top:12px}
+.user-pick-btn{flex:1;padding:24px 0;border:none;border-radius:16px;font-size:17px;font-weight:700;color:white}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div style="text-align:center;margin-bottom:36px">
+    <div style="font-size:48px;margin-bottom:8px">🏗️</div>
+    <div style="font-size:24px;font-weight:700">Keitel</div>
+    <div style="font-size:13px;color:#64748b">Charges Perso / Pro</div>
+  </div>
+  <div id="login-pick" style="display:flex;gap:16px;width:100%;max-width:280px">
+    <button class="user-pick-btn" style="background:#1d4ed8" onclick="pickUser('julien')">Julien</button>
+    <button class="user-pick-btn" style="background:#15803d" onclick="pickUser('david')">David</button>
+  </div>
+  <div id="login-pin" style="display:none;width:100%;max-width:300px;text-align:center">
+    <div class="muted" style="font-size:13px;margin-bottom:16px" id="pin-label"></div>
+    <input class="pin-input" type="password" inputmode="numeric" maxlength="8" id="pin-input" placeholder="••••" onkeydown="if(event.key==='Enter')submitPin()"/>
+    <div id="pin-err" style="color:#ef4444;font-size:13px;margin-top:8px;min-height:18px"></div>
+    <button class="btn-primary" style="margin-top:16px" onclick="submitPin()" id="pin-btn">Connexion</button>
+    <br><button class="btn-secondary" onclick="showPick()">← Retour</button>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <div id="header">
+    <div>
+      <div class="header-title-sub">Keitel</div>
+      <div class="header-title">Charges Perso / Pro</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="user-badge" id="user-badge"></div>
+      <button class="logout-btn" onclick="logout()">⏏</button>
+    </div>
+  </div>
+
+  <div id="page-dash" class="page active">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <button onclick="prevMonth()" style="background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:10px;padding:6px 18px;font-size:20px">‹</button>
+      <div style="font-size:17px;font-weight:700" id="dash-month-label"></div>
+      <button onclick="nextMonth()" style="background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:10px;padding:6px 18px;font-size:20px">›</button>
+    </div>
+    <div id="dash-balance" style="border-radius:14px;padding:16px 18px;margin-bottom:14px"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px" id="dash-cards"></div>
+    <div id="dash-label" style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px"></div>
+    <div id="dash-list"></div>
+  </div>
+
+  <div id="page-add" class="page">
+    <div style="font-size:17px;font-weight:700;margin-bottom:20px">Nouvelle dépense</div>
+    <div class="lbl">Bénéficiaire</div>
+    <div style="display:flex;gap:10px;margin-bottom:16px">
+      <button id="btn-julien" onclick="selectPerson('julien')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #2563eb;background:#1d4ed8;color:white;font-weight:700;font-size:14px">Julien</button>
+      <button id="btn-david" onclick="selectPerson('david')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #334155;background:#1e293b;color:white;font-weight:700;font-size:14px">David</button>
+    </div>
+    <div class="lbl">Date</div>
+    <input class="inp" type="date" id="add-date"/>
+    <div class="lbl">Catégorie</div>
+    <select class="inp" id="add-cat" onchange="onCatChange()"></select>
+    <input class="inp" type="text" id="add-custom-cat" placeholder="Nom de la catégorie" style="display:none;margin-top:-4px"/>
+    <div class="lbl">Libellé</div>
+    <input class="inp" type="text" id="add-label" placeholder="Ex : Essence Total Aix"/>
+    <div class="lbl">Montant (€)</div>
+    <input class="inp" type="number" inputmode="decimal" step="0.01" min="0" id="add-amount" placeholder="0,00"/>
+    <div id="add-err" style="color:#ef4444;font-size:13px;margin-bottom:8px"></div>
+    <button class="btn-primary" onclick="saveVariable()" id="add-btn">Enregistrer</button>
+  </div>
+
+  <div id="page-fixed" class="page">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:17px;font-weight:700">Charges fixes</div>
+      <button onclick="showFixedForm()" style="background:#2563eb;color:white;border:none;border-radius:10px;padding:8px 16px;font-size:13px;font-weight:700">+ Ajouter</button>
+    </div>
+    <div id="fixed-form" style="display:none;background:#1e293b;border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid #334155">
+      <div style="font-size:14px;font-weight:600;margin-bottom:14px" id="fixed-form-title">Nouvelle charge fixe</div>
+      <div class="lbl">Bénéficiaire</div>
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <button id="fbtn-julien" onclick="selectFixedPerson('julien')" style="flex:1;padding:10px;border-radius:10px;border:2px solid #2563eb;background:#1d4ed8;color:white;font-weight:700;font-size:13px">Julien</button>
+        <button id="fbtn-david" onclick="selectFixedPerson('david')" style="flex:1;padding:10px;border-radius:10px;border:2px solid #334155;background:#1e293b;color:white;font-weight:700;font-size:13px">David</button>
+      </div>
+      <div class="lbl">Catégorie</div>
+      <select class="inp" id="fixed-cat" onchange="onFixedCatChange()"></select>
+      <input class="inp" type="text" id="fixed-custom-cat" placeholder="Nom de la catégorie" style="display:none;margin-top:-4px"/>
+      <div class="lbl">Libellé</div>
+      <input class="inp" type="text" id="fixed-label" placeholder="Ex : Loyer bureau"/>
+      <div class="lbl">Montant mensuel (€)</div>
+      <input class="inp" type="number" inputmode="decimal" step="0.01" min="0" id="fixed-amount" placeholder="0,00"/>
+      <div class="lbl">Mois de début</div>
+      <input class="inp" type="month" id="fixed-start"/>
+      <div id="fixed-err" style="color:#ef4444;font-size:13px;margin-bottom:8px"></div>
+      <div style="display:flex;gap:10px">
+        <button onclick="hideFixedForm()" style="flex:1;background:#0f172a;color:#94a3b8;border:1px solid #334155;border-radius:10px;padding:12px;font-size:13px;font-weight:600">Annuler</button>
+        <button onclick="saveFixed()" style="flex:1;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:700">Enregistrer</button>
+      </div>
+    </div>
+    <div id="fixed-list"></div>
+  </div>
+
+  <div id="page-annual" class="page">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <button onclick="prevYear()" style="background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:10px;padding:6px 18px;font-size:20px">‹</button>
+      <div style="font-size:17px;font-weight:700" id="annual-year-label"></div>
+      <button onclick="nextYear()" style="background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:10px;padding:6px 18px;font-size:20px">›</button>
+    </div>
+    <div id="annual-table"></div>
+    <div style="margin-top:12px;font-size:11px;color:#64748b;text-align:center">Balance = montant à transférer pour équilibrer à 50/50</div>
+  </div>
+
+  <div id="page-config" class="page">
+    <div style="font-size:17px;font-weight:700;margin-bottom:20px">Réglages</div>
+    <div style="background:#1e293b;border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid #334155">
+      <div style="font-size:13px;color:#94a3b8;margin-bottom:14px;font-weight:500" id="config-pin-label"></div>
+      <input class="inp" type="password" inputmode="numeric" maxlength="8" id="new-pin1" placeholder="Nouveau code"/>
+      <input class="inp" type="password" inputmode="numeric" maxlength="8" id="new-pin2" placeholder="Confirmer le code"/>
+      <div id="config-msg" style="font-size:13px;margin-bottom:10px;min-height:18px"></div>
+      <button class="btn-primary" style="border-radius:10px;padding:13px;font-size:14px" onclick="changePin()">Changer le code</button>
+    </div>
+    <button onclick="logout()" style="width:100%;background:#1e293b;color:#ef4444;border:1px solid #334155;border-radius:14px;padding:14px;font-size:15px;font-weight:600">Se déconnecter</button>
+  </div>
+
+  <nav id="bottom-nav">
+    <button class="nav-btn active" data-page="dash" onclick="goTo('dash')"><span style="font-size:18px">🏠</span>Mois</button>
+    <button class="nav-btn" data-page="add" onclick="goTo('add')"><span class="nav-add-icon">+</span>Saisie</button>
+    <button class="nav-btn" data-page="fixed" onclick="goTo('fixed')"><span style="font-size:18px">📋</span>Fixes</button>
+    <button class="nav-btn" data-page="annual" onclick="goTo('annual')"><span style="font-size:18px">📊</span>Annuel</button>
+    <button class="nav-btn" data-page="config" onclick="goTo('config')"><span style="font-size:18px">⚙️</span>Config</button>
+  </nav>
+</div>
+
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbwmHBaK5shONRzjdZGttkaeaBOQcIdFGa829L3bPQJ3ihUFsPCYIPKQ4R2IHp71dndc/exec';
+const MFR = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+const MFR_LONG = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const DEF_CATS = ['Mutuelle','Téléphone','PER','Loyer Locaux'];
+
+let DB = { config:[], fixed:[], variable:[] };
+let currentUser = null;
+let currentPage = 'dash';
+let dashMonth = curMonth();
+let annualYear = new Date().getFullYear();
+let addPerson = 'julien';
+let fixedPerson = 'julien';
+let editFixedId = null;
+let loading = false;
+
+// ─── UTILS ───────────────────────────────────────────────
+function fmt(n){ return Number(n).toFixed(2).replace('.',',')+' €'; }
+function uid(){ return Math.random().toString(36).slice(2,9); }
+function today(){ return new Date().toISOString().slice(0,10); }
+function curMonth(){ return today().slice(0,7); }
+function ymLabel(ym){ const [y,m]=ym.split('-'); return `${MFR_LONG[+m-1]} ${y}`; }
+function hashPin(p){ return String(p.split('').reduce((a,c,i)=>a+c.charCodeAt(0)*(i+3),17)); }
+function prevM(m){ const [y,mo]=m.split('-').map(Number); return mo===1?`${y-1}-12`:`${y}-${String(mo-1).padStart(2,'0')}`; }
+function nextM(m){ const [y,mo]=m.split('-').map(Number); return mo===12?`${y+1}-01`:`${y}-${String(mo+1).padStart(2,'0')}`; }
+
+// ─── API ─────────────────────────────────────────────────
+async function apiRead(){
+  const r = await fetch(`${API}?action=read`);
+  const d = await r.json();
+  return d;
+}
+
+async function apiWrite(){
+  const url = `${API}?action=write&data=${encodeURIComponent(JSON.stringify(DB))}`;
+  await fetch(url);
+}
+
+// ─── CONFIG ROW HELPERS ──────────────────────────────────
+function getCfg(key){ const r=DB.config.find(c=>c.key===key); return r?r.value:null; }
+function setCfg(key,value){
+  const idx=DB.config.findIndex(c=>c.key===key);
+  if(idx>=0) DB.config[idx].value=value;
+  else DB.config.push({key,value});
+}
+
+// ─── AUTH ─────────────────────────────────────────────────
+let pickingUser = null;
+function showPick(){ document.getElementById('login-pick').style.display='flex'; document.getElementById('login-pin').style.display='none'; }
+
+function pickUser(who){
+  pickingUser = who;
+  document.getElementById('login-pick').style.display='none';
+  document.getElementById('login-pin').style.display='block';
+  const existing = getCfg(`pin_${who}`);
+  document.getElementById('pin-label').textContent = existing
+    ? `Code PIN — ${who==='julien'?'Julien':'David'}`
+    : `Créer un code PIN pour ${who==='julien'?'Julien':'David'}`;
+  document.getElementById('pin-btn').textContent = existing ? 'Connexion' : 'Créer le code';
+  document.getElementById('pin-input').value='';
+  document.getElementById('pin-err').textContent='';
+}
+
+async function submitPin(){
+  const pin = document.getElementById('pin-input').value.replace(/\D/g,'');
+  if(pin.length<4){ document.getElementById('pin-err').textContent='Minimum 4 chiffres'; return; }
+  const existing = getCfg(`pin_${pickingUser}`);
+  if(!existing){
+    setCfg(`pin_${pickingUser}`, hashPin(pin));
+    await apiWrite();
+    loginAs(pickingUser);
+  } else {
+    if(hashPin(pin)===existing){ loginAs(pickingUser); }
+    else { document.getElementById('pin-err').textContent='Code incorrect'; document.getElementById('pin-input').value=''; }
+  }
+}
+
+function loginAs(who){
+  currentUser = who;
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  const badge = document.getElementById('user-badge');
+  badge.textContent = who==='julien'?'Julien':'David';
+  badge.style.background = who==='julien'?'#1d4ed8':'#15803d';
+  document.getElementById('config-pin-label').textContent=`Modifier mon code PIN (${who==='julien'?'Julien':'David'})`;
+  addPerson = who;
+  initAdd();
+  goTo('dash');
+}
+
+function logout(){
+  currentUser=null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  showPick();
+}
+
+// ─── NAV ─────────────────────────────────────────────────
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`page-${page}`).classList.add('active');
+  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  currentPage = page;
+  if(page==='dash') renderDash();
+  if(page==='fixed') renderFixed();
+  if(page==='annual') renderAnnual();
+}
+
+// ─── CALC ─────────────────────────────────────────────────
+function calcMonth(month){
+  const fc = DB.fixed.filter(c=>c.startMonth<=month);
+  const vc = DB.variable.filter(c=>c.month===month);
+  const sum=(arr,p)=>arr.filter(c=>c.person===p).reduce((s,c)=>s+Number(c.amount),0);
+  const jF=sum(fc,'julien'),dF=sum(fc,'david'),jV=sum(vc,'julien'),dV=sum(vc,'david');
+  return {jF,dF,jV,dV,jT:jF+jV,dT:dF+dV,diff:(jF+jV)-(dF+dV)};
+}
+
+// ─── DASH ─────────────────────────────────────────────────
+function prevMonth(){ dashMonth=prevM(dashMonth); renderDash(); }
+function nextMonth(){ dashMonth=nextM(dashMonth); renderDash(); }
+
+function renderDash(){
+  document.getElementById('dash-month-label').textContent = ymLabel(dashMonth);
+  const s = calcMonth(dashMonth);
+  const bal = Math.abs(s.diff)/2;
+  const debtor = s.diff>0.005?'david':s.diff<-0.005?'julien':null;
+  const creditor = debtor==='david'?'julien':debtor==='julien'?'david':null;
+  const balDiv = document.getElementById('dash-balance');
+  if(debtor){
+    balDiv.style.cssText='background:#1e293b;border:1px solid #334155;border-radius:14px;padding:16px 18px;margin-bottom:14px';
+    const dColor = debtor==='david'?'#4ade80':'#60a5fa';
+    const cColor = creditor==='julien'?'#60a5fa':'#4ade80';
+    balDiv.innerHTML=`<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Rééquilibrage</div>
+    <div style="font-size:14px"><span style="font-weight:700;color:${dColor}">${debtor==='david'?'David':'Julien'}</span>
+    <span style="color:#94a3b8"> doit </span><span style="font-weight:700;font-size:20px">${fmt(bal)}</span>
+    <span style="color:#94a3b8"> à </span><span style="font-weight:700;color:${cColor}">${creditor==='julien'?'Julien':'David'}</span></div>`;
+  } else {
+    balDiv.style.cssText='background:#14532d22;border:1px solid #166534;border-radius:14px;padding:16px 18px;margin-bottom:14px;text-align:center';
+    balDiv.innerHTML='<span style="color:#4ade80;font-weight:600;font-size:15px">✓ Équilibré</span>';
+  }
+  const cards = document.getElementById('dash-cards');
+  cards.innerHTML='';
+  [{p:'julien',f:s.jF,v:s.jV,t:s.jT,c:'#2563eb'},{p:'david',f:s.dF,v:s.dV,t:s.dT,c:'#16a34a'}].forEach(row=>{
+    const d=document.createElement('div');
+    d.style.cssText=`background:#1e293b;border-radius:12px;padding:14px 12px;border:1px solid ${row.c}33`;
+    d.innerHTML=`<div style="font-size:11px;color:#94a3b8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">${row.p==='julien'?'Julien':'David'}</div>
+    <div style="font-size:22px;font-weight:700;margin-bottom:8px">${fmt(row.t)}</div>
+    <div style="font-size:11px;color:#64748b">Fixes : ${fmt(row.f)}</div>
+    <div style="font-size:11px;color:#64748b">Variables : ${fmt(row.v)}</div>`;
+    cards.appendChild(d);
+  });
+  const varList = DB.variable.filter(c=>c.month===dashMonth).sort((a,b)=>b.date.localeCompare(a.date));
+  const listDiv = document.getElementById('dash-list');
+  document.getElementById('dash-label').textContent = varList.length?'Dépenses du mois':'';
+  listDiv.innerHTML='';
+  if(!varList.length){
+    listDiv.innerHTML='<div style="text-align:center;color:#64748b;font-size:13px;margin-top:32px;font-style:italic">Aucune dépense variable ce mois</div>';
+    return;
+  }
+  varList.forEach(c=>{
+    const row=document.createElement('div');
+    row.className='card';
+    const pColor=c.person==='julien'?'#60a5fa':'#4ade80';
+    row.innerHTML=`<div style="flex:1;min-width:0">
+      <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.label}</div>
+      <div style="font-size:11px;color:#64748b">${c.category} · ${c.date.slice(8)}/${c.date.slice(5,7)} · <span style="color:${pColor}">${c.person==='julien'?'Julien':'David'}</span></div>
+    </div>
+    <div style="font-size:13px;font-weight:700;flex-shrink:0">${fmt(c.amount)}</div>
+    <button onclick="deleteVariable('${c.id}')" style="background:none;border:none;color:#475569;font-size:18px;line-height:1;padding:2px 4px;flex-shrink:0">×</button>`;
+    listDiv.appendChild(row);
+  });
+}
+
+async function deleteVariable(id){
+  if(!confirm('Supprimer cette dépense ?')) return;
+  DB.variable = DB.variable.filter(c=>c.id!==id);
+  renderDash();
+  await apiWrite();
+}
+
+// ─── ADD ─────────────────────────────────────────────────
+function initAdd(){
+  document.getElementById('add-date').value = today();
+  selectPerson(currentUser||'julien');
+  populateCatSelect('add-cat');
+  document.getElementById('add-label').value='';
+  document.getElementById('add-amount').value='';
+  document.getElementById('add-err').textContent='';
+  document.getElementById('add-custom-cat').style.display='none';
+}
+
+function selectPerson(p){
+  addPerson=p;
+  const jb=document.getElementById('btn-julien'),db=document.getElementById('btn-david');
+  jb.style.border=`2px solid ${p==='julien'?'#2563eb':'#334155'}`;
+  jb.style.background=p==='julien'?'#1d4ed8':'#1e293b';
+  db.style.border=`2px solid ${p==='david'?'#16a34a':'#334155'}`;
+  db.style.background=p==='david'?'#15803d':'#1e293b';
+}
+
+function populateCatSelect(selId){
+  const sel=document.getElementById(selId);
+  const cats=[...new Set([...DEF_CATS,...DB.fixed.map(c=>c.category),...DB.variable.map(c=>c.category)])].filter(Boolean);
+  sel.innerHTML='<option value="">— Choisir —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('')+'<option value="__custom__">+ Autre…</option>';
+}
+
+function onCatChange(){
+  document.getElementById('add-custom-cat').style.display=document.getElementById('add-cat').value==='__custom__'?'block':'none';
+}
+
+async function saveVariable(){
+  const cat = document.getElementById('add-cat').value==='__custom__'
+    ? document.getElementById('add-custom-cat').value.trim()
+    : document.getElementById('add-cat').value;
+  const label = document.getElementById('add-label').value.trim();
+  const amount = parseFloat(document.getElementById('add-amount').value.replace(',','.'));
+  const date = document.getElementById('add-date').value;
+  const err = document.getElementById('add-err');
+  if(!cat||!label||!date||isNaN(amount)||amount<=0){ err.textContent='Tous les champs sont requis'; return; }
+  err.textContent='';
+  const btn=document.getElementById('add-btn');
+  btn.innerHTML='<span class="spinner"></span>Enregistrement…';
+  btn.disabled=true;
+  DB.variable.push({id:uid(),person:addPerson,category:cat,label,amount,date,month:date.slice(0,7)});
+  await apiWrite();
+  btn.innerHTML='✓ Enregistré !';
+  btn.style.background='#15803d';
+  setTimeout(()=>{ btn.innerHTML='Enregistrer'; btn.style.background='#2563eb'; btn.disabled=false; initAdd(); },1500);
+}
+
+// ─── FIXED ───────────────────────────────────────────────
+function showFixedForm(id=null){
+  editFixedId=id;
+  document.getElementById('fixed-form').style.display='block';
+  document.getElementById('fixed-form-title').textContent=id?'Modifier la charge':'Nouvelle charge fixe';
+  populateCatSelect('fixed-cat');
+  document.getElementById('fixed-err').textContent='';
+  document.getElementById('fixed-custom-cat').style.display='none';
+  if(id){
+    const c=DB.fixed.find(x=>x.id===id);
+    selectFixedPerson(c.person);
+    document.getElementById('fixed-cat').value=c.category;
+    document.getElementById('fixed-label').value=c.label;
+    document.getElementById('fixed-amount').value=c.amount;
+    document.getElementById('fixed-start').value=c.startMonth;
+  } else {
+    selectFixedPerson('julien');
+    document.getElementById('fixed-cat').value='';
+    document.getElementById('fixed-label').value='';
+    document.getElementById('fixed-amount').value='';
+    document.getElementById('fixed-start').value=curMonth();
+  }
+}
+function hideFixedForm(){ document.getElementById('fixed-form').style.display='none'; editFixedId=null; }
+function selectFixedPerson(p){
+  fixedPerson=p;
+  const jb=document.getElementById('fbtn-julien'),db=document.getElementById('fbtn-david');
+  jb.style.border=`2px solid ${p==='julien'?'#2563eb':'#334155'}`;
+  jb.style.background=p==='julien'?'#1d4ed8':'#1e293b';
+  db.style.border=`2px solid ${p==='david'?'#16a34a':'#334155'}`;
+  db.style.background=p==='david'?'#15803d':'#1e293b';
+}
+function onFixedCatChange(){
+  document.getElementById('fixed-custom-cat').style.display=document.getElementById('fixed-cat').value==='__custom__'?'block':'none';
+}
+async function saveFixed(){
+  const cat=document.getElementById('fixed-cat').value==='__custom__'
+    ?document.getElementById('fixed-custom-cat').value.trim()
+    :document.getElementById('fixed-cat').value;
+  const label=document.getElementById('fixed-label').value.trim();
+  const amount=parseFloat(document.getElementById('fixed-amount').value.replace(',','.'));
+  const startMonth=document.getElementById('fixed-start').value;
+  const err=document.getElementById('fixed-err');
+  if(!cat||!label||!startMonth||isNaN(amount)||amount<=0){err.textContent='Tous les champs sont requis';return;}
+  err.textContent='';
+  const entry={id:editFixedId||uid(),person:fixedPerson,category:cat,label,amount,startMonth};
+  if(editFixedId) DB.fixed=DB.fixed.map(c=>c.id===editFixedId?entry:c);
+  else DB.fixed.push(entry);
+  hideFixedForm();
+  renderFixed();
+  await apiWrite();
+}
+async function deleteFixed(id){
+  if(!confirm('Supprimer cette charge fixe ?')) return;
+  DB.fixed=DB.fixed.filter(c=>c.id!==id);
+  renderFixed();
+  await apiWrite();
+}
+function renderFixed(){
+  const list=document.getElementById('fixed-list');
+  list.innerHTML='';
+  [{lbl:'Julien',p:'julien',c:'#2563eb'},{lbl:'David',p:'david',c:'#16a34a'}].forEach(({lbl,p,c})=>{
+    const items=DB.fixed.filter(x=>x.person===p);
+    const total=items.reduce((s,x)=>s+Number(x.amount),0);
+    const sec=document.createElement('div');
+    sec.style.marginBottom='24px';
+    sec.innerHTML=`<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+      <span>${lbl}</span><span style="color:#f1f5f9;font-weight:600">${fmt(total)}/mois</span></div>
+      ${items.length===0?'<div style="color:#64748b;font-size:13px;font-style:italic;padding:8px 4px">Aucune charge fixe</div>':''}`;
+    items.forEach(x=>{
+      const row=document.createElement('div');
+      row.className='card';
+      row.innerHTML=`<div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600">${x.label}</div>
+        <div style="font-size:11px;color:#64748b">${x.category} · dès ${ymLabel(x.startMonth)}</div>
+      </div>
+      <div style="font-size:14px;font-weight:700;flex-shrink:0">${fmt(x.amount)}</div>
+      <button onclick="showFixedForm('${x.id}')" style="background:none;border:none;color:#64748b;font-size:15px;padding:2px 4px;flex-shrink:0">✏️</button>
+      <button onclick="deleteFixed('${x.id}')" style="background:none;border:none;color:#475569;font-size:18px;line-height:1;padding:2px 4px;flex-shrink:0">×</button>`;
+      sec.appendChild(row);
+    });
+    list.appendChild(sec);
+  });
+}
+
+// ─── ANNUAL ──────────────────────────────────────────────
+function prevYear(){ annualYear--; renderAnnual(); }
+function nextYear(){ annualYear++; renderAnnual(); }
+function renderAnnual(){
+  document.getElementById('annual-year-label').textContent=annualYear;
+  const months=Array.from({length:12},(_,i)=>`${annualYear}-${String(i+1).padStart(2,'0')}`);
+  const rows=months.map((m,i)=>{
+    const s=calcMonth(m);
+    const b=Math.abs(s.diff)/2;
+    const dbt=s.diff>0.005?'D':s.diff<-0.005?'J':null;
+    const bal=!dbt?`<span style="color:#4ade80">≈ 0</span>`:`<span style="color:#fbbf24">${dbt}→${dbt==='D'?'J':'D'} ${fmt(b)}</span>`;
+    return `<tr style="border-top:1px solid #334155;background:${i%2===0?'transparent':'#ffffff06'}">
+      <td style="padding:10px 12px;font-weight:500">${MFR[+m.slice(5)-1]}</td>
+      <td style="padding:10px 12px;text-align:right;color:#93c5fd">${fmt(s.jT)}</td>
+      <td style="padding:10px 12px;text-align:right;color:#86efac">${fmt(s.dT)}</td>
+      <td style="padding:10px 12px;text-align:right;font-size:12px">${bal}</td></tr>`;
+  }).join('');
+  const totJ=months.reduce((s,m)=>s+calcMonth(m).jT,0);
+  const totD=months.reduce((s,m)=>s+calcMonth(m).dT,0);
+  const totBal=Math.abs(totJ-totD)<0.01?'Équilibré':`Δ ${fmt(Math.abs(totJ-totD)/2)}`;
+  document.getElementById('annual-table').innerHTML=`
+  <div style="background:#1e293b;border-radius:14px;overflow:hidden;border:1px solid #334155">
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+  <thead><tr style="background:#0f172a">
+    <th style="text-align:left;padding:10px 12px;color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">Mois</th>
+    <th style="text-align:right;padding:10px 12px;color:#93c5fd;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">Julien</th>
+    <th style="text-align:right;padding:10px 12px;color:#86efac;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">David</th>
+    <th style="text-align:right;padding:10px 12px;color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">Balance</th>
+  </tr></thead>
+  <tbody>${rows}</tbody>
+  <tfoot><tr style="border-top:2px solid #334155;background:#0f172a">
+    <td style="padding:12px;color:#94a3b8;font-size:11px;text-transform:uppercase;font-weight:500">Total</td>
+    <td style="padding:12px;text-align:right;color:#93c5fd;font-weight:700">${fmt(totJ)}</td>
+    <td style="padding:12px;text-align:right;color:#86efac;font-weight:700">${fmt(totD)}</td>
+    <td style="padding:12px;text-align:right;color:#fbbf24;font-size:12px;font-weight:700">${totBal}</td>
+  </tr></tfoot>
+  </table></div>`;
+}
+
+// ─── CONFIG ──────────────────────────────────────────────
+async function changePin(){
+  const p1=document.getElementById('new-pin1').value.replace(/\D/g,'');
+  const p2=document.getElementById('new-pin2').value.replace(/\D/g,'');
+  const msg=document.getElementById('config-msg');
+  if(p1.length<4){msg.style.color='#ef4444';msg.textContent='Minimum 4 chiffres';return;}
+  if(p1!==p2){msg.style.color='#ef4444';msg.textContent='Les codes ne correspondent pas';return;}
+  setCfg(`pin_${currentUser}`,hashPin(p1));
+  await apiWrite();
+  document.getElementById('new-pin1').value='';
+  document.getElementById('new-pin2').value='';
+  msg.style.color='#4ade80';msg.textContent='✓ Code modifié';
+  setTimeout(()=>msg.textContent='',2500);
+}
+
+// ─── INIT ────────────────────────────────────────────────
+async function init(){
+  try {
+    const d = await apiRead();
+    if(d && !d.error){
+      DB.config = d.config||[];
+      DB.fixed = (d.fixed||[]).map(r=>({...r,amount:Number(r.amount)}));
+      DB.variable = (d.variable||[]).map(r=>({...r,amount:Number(r.amount)}));
+    }
+  } catch(e){ console.warn('API init error',e); }
+}
+
+init();
+</script>
+</body>
+</html>
