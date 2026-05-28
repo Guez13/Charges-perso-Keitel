@@ -404,6 +404,7 @@ async function saveVariable(){
   const btn=document.getElementById('add-btn');
   btn.innerHTML='<span class="spinner"></span>Enregistrement…';
   btn.disabled=true;
+  const entry = {id:uid(),person:addPerson,category:cat,label,amount,date,month:date.slice(0,7)};
   DB.variable.push(entry);
   await apiAddVariable(entry);
   btn.innerHTML='✓ Enregistré !';
