@@ -209,11 +209,24 @@ async function apiRead() {
   } catch(e) { console.error('apiRead error',e); return null; }
 }
 
-async function apiWrite() {
-  try {
-    const data = encodeURIComponent(JSON.stringify(DB));
-    await jsonp(`${API}?action=write&data=${data}`);
-  } catch(e) { console.error('apiWrite error',e); }
+async function apiAddVariable(row) {
+  try { await jsonp(`${API}?action=addvariable&row=${encodeURIComponent(JSON.stringify(row))}`); }
+  catch(e) { console.error('apiAddVariable error',e); }
+}
+
+async function apiDelVariable(id) {
+  try { await jsonp(`${API}?action=delvariable&id=${id}`); }
+  catch(e) { console.error('apiDelVariable error',e); }
+}
+
+async function apiAddFixed(row) {
+  try { await jsonp(`${API}?action=addfixed&row=${encodeURIComponent(JSON.stringify(row))}`); }
+  catch(e) { console.error('apiAddFixed error',e); }
+}
+
+async function apiDelFixed(id) {
+  try { await jsonp(`${API}?action=delfixed&id=${id}`); }
+  catch(e) { console.error('apiDelFixed error',e); }
 }
 
 // ─── CONFIG ──────────────────────────────────────────────
@@ -349,7 +362,7 @@ async function deleteVariable(id){
   if(!confirm('Supprimer cette dépense ?')) return;
   DB.variable=DB.variable.filter(c=>c.id!==id);
   renderDash();
-  await apiWrite();
+  await apiDelVariable(id);
 }
 
 // ─── ADD ─────────────────────────────────────────────────
@@ -391,8 +404,8 @@ async function saveVariable(){
   const btn=document.getElementById('add-btn');
   btn.innerHTML='<span class="spinner"></span>Enregistrement…';
   btn.disabled=true;
-  DB.variable.push({id:uid(),person:addPerson,category:cat,label,amount,date,month:date.slice(0,7)});
-  await apiWrite();
+  DB.variable.push(entry);
+  await apiAddVariable(entry);
   btn.innerHTML='✓ Enregistré !';
   btn.style.background='#15803d';
   setTimeout(()=>{ btn.innerHTML='Enregistrer'; btn.style.background='#2563eb'; btn.disabled=false; initAdd(); },1500);
@@ -442,13 +455,13 @@ async function saveFixed(){
   const entry={id:editFixedId||uid(),person:fixedPerson,category:cat,label,amount,startMonth};
   if(editFixedId) DB.fixed=DB.fixed.map(c=>c.id===editFixedId?entry:c);
   else DB.fixed.push(entry);
-  hideFixedForm(); renderFixed(); await apiWrite();
+  hideFixedForm(); renderFixed(); await apiAddFixed(entry);
 }
 
 async function deleteFixed(id){
   if(!confirm('Supprimer cette charge fixe ?')) return;
   DB.fixed=DB.fixed.filter(c=>c.id!==id);
-  renderFixed(); await apiWrite();
+  renderFixed(); await apiDelFixed(id);
 }
 
 function renderFixed(){
