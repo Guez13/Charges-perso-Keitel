@@ -541,24 +541,35 @@ async function changePin(){
 }
 
 // ─── INIT ────────────────────────────────────────────────
-function toLocalDate(d) {
-  const dt = new Date(d);
-  const off = dt.getTimezoneOffset();
-  const local = new Date(dt.getTime() - off * 60000);
-  return local.toISOString().slice(0, 10);
+function parseDate(val) {
+  if (!val) return '';
+  const s = String(val);
+  // Format ISO yyyy-MM-dd
+  if (s.match(/^\d{4}-\d{2}-\d{2}/)) return s.slice(0, 10);
+  // Format avec T
+  if (s.includes('T')) return s.slice(0, 10);
+  // Format long "Thu May 28 2026..."
+  try {
+    const d = new Date(s);
+    if (!isNaN(d)) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+  } catch(e) {}
+  return s.slice(0,10);
 }
-function toLocalMonth(d) { return toLocalDate(d).slice(0, 7); }
 
 async function init(){
   try {
     const d = await apiRead();
     if(d && !d.error){
       DB.config = d.config||[];
-      DB.fixed = (d.fixed||[]).map(r=>({...r, amount:Number(r.amount), startMonth:String(r.startMonth).slice(0,7)}));
+      DB.fixed = (d.fixed||[]).map(r=>({...r, amount:Number(r.amount), startMonth:parseDate(r.startMonth).slice(0,7)}));
       DB.variable = (d.variable||[]).map(r=>{
-        const date = String(r.date).slice(0,10);
-        const month = date.slice(0,7);
-        return {...r, amount:Number(r.amount), date, month};
+        const date = parseDate(r.date);
+        return {...r, amount:Number(r.amount), date, month:date.slice(0,7)};
       });
     }
   } catch(e){ console.warn('Init error',e); }
