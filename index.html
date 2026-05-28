@@ -289,7 +289,7 @@ function goTo(page){
 
 // ─── CALC ─────────────────────────────────────────────────
 function calcMonth(month){
-  const fc = DB.fixed.filter(c=>c.startMonth<=month);
+  const fc = DB.fixed.filter(c=>String(c.startMonth).slice(0,7)<=month);
   const vc = DB.variable.filter(c=>c.month===month);
   const sum=(arr,p)=>arr.filter(c=>c.person===p).reduce((s,c)=>s+Number(c.amount),0);
   const jF=sum(fc,'julien'),dF=sum(fc,'david'),jV=sum(vc,'julien'),dV=sum(vc,'david');
@@ -304,7 +304,7 @@ function renderDash(){
   document.getElementById('dash-month-label').textContent = ymLabel(dashMonth);
   const s = calcMonth(dashMonth);
   const bal = Math.abs(s.diff)/2;
-  const debtor = s.diff>0.005?'david':s.diff<-0.005?'julien':null;
+  const debtor = s.diff>0.005?'julien':s.diff<-0.005?'david':null;
   const creditor = debtor==='david'?'julien':debtor==='julien'?'david':null;
   const balDiv = document.getElementById('dash-balance');
   if(debtor){
