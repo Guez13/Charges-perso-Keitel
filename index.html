@@ -316,7 +316,7 @@ function nextMonth(){ dashMonth=nextM(dashMonth); renderDash(); }
 function renderDash(){
   document.getElementById('dash-month-label').textContent = ymLabel(dashMonth);
   const s = calcMonth(dashMonth);
-  const bal = Math.abs(s.diff)/2;
+  const bal = Math.abs(s.diff);
   const debtor = s.diff>0.005?'julien':s.diff<-0.005?'david':null;
   const creditor = debtor==='david'?'julien':debtor==='julien'?'david':null;
   const balDiv = document.getElementById('dash-balance');
