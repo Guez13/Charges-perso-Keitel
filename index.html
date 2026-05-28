@@ -10,46 +10,23 @@ body{background:#0f172a;color:#f1f5f9;font-family:system-ui,-apple-system,sans-s
 #app{width:100%;max-width:440px;min-height:100vh;display:flex;flex-direction:column;position:relative}
 button{cursor:pointer;font-family:inherit}
 input,select{font-family:inherit;outline:none}
-.surface{background:#1e293b}
-.border{border:1px solid #334155}
-.muted{color:#94a3b8}
-.dim{color:#64748b}
-
-/* NAV */
 #bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;background:#1e293b;border-top:1px solid #334155;display:flex;z-index:100}
 .nav-btn{flex:1;padding:10px 0;background:none;border:none;color:#64748b;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;letter-spacing:0.3px}
 .nav-btn.active{color:#60a5fa}
-.nav-add-icon{background:#2563eb;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:white;font-weight:300;line-height:1}
-
-/* HEADER */
+.nav-add-icon{background:#2563eb;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:22px;color:white;line-height:1}
 #header{background:#1e293b;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #334155;flex-shrink:0}
-.header-title-sub{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px}
-.header-title{font-size:16px;font-weight:700}
-.user-badge{border-radius:20px;padding:5px 14px;font-size:13px;font-weight:700}
-.logout-btn{background:none;border:none;color:#64748b;font-size:20px;line-height:1;padding:2px 4px}
-
-/* PAGES */
 .page{display:none;padding:16px;padding-bottom:80px;flex:1;overflow-y:auto}
 .page.active{display:block}
-
-/* FORMS */
 .lbl{font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
 .inp{width:100%;background:#1e293b;border:1px solid #334155;border-radius:10px;padding:12px 14px;font-size:14px;color:#f1f5f9;margin-bottom:12px}
 .inp:focus{border-color:#3b82f6}
 select.inp option{background:#1e293b}
-
-/* CARDS */
 .card{background:#1e293b;border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-
-/* SPINNER */
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid #334155;border-top-color:#60a5fa;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* LOGIN */
 #login-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;width:100%;max-width:440px}
 .pin-input{width:100%;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:14px;font-size:28px;color:#f1f5f9;text-align:center;letter-spacing:10px}
 .btn-primary{width:100%;background:#2563eb;color:white;border:none;border-radius:14px;padding:16px;font-size:15px;font-weight:700}
-.btn-secondary{background:none;border:none;color:#64748b;font-size:13px;margin-top:12px}
 .user-pick-btn{flex:1;padding:24px 0;border:none;border-radius:16px;font-size:17px;font-weight:700;color:white}
 </style>
 </head>
@@ -66,26 +43,27 @@ select.inp option{background:#1e293b}
     <button class="user-pick-btn" style="background:#15803d" onclick="pickUser('david')">David</button>
   </div>
   <div id="login-pin" style="display:none;width:100%;max-width:300px;text-align:center">
-    <div class="muted" style="font-size:13px;margin-bottom:16px" id="pin-label"></div>
+    <div style="font-size:13px;color:#94a3b8;margin-bottom:16px" id="pin-label"></div>
     <input class="pin-input" type="password" inputmode="numeric" maxlength="8" id="pin-input" placeholder="••••" onkeydown="if(event.key==='Enter')submitPin()"/>
     <div id="pin-err" style="color:#ef4444;font-size:13px;margin-top:8px;min-height:18px"></div>
     <button class="btn-primary" style="margin-top:16px" onclick="submitPin()" id="pin-btn">Connexion</button>
-    <br><button class="btn-secondary" onclick="showPick()">← Retour</button>
+    <br><button style="background:none;border:none;color:#64748b;font-size:13px;margin-top:12px;cursor:pointer" onclick="showPick()">← Retour</button>
   </div>
 </div>
 
 <div id="app" style="display:none">
   <div id="header">
     <div>
-      <div class="header-title-sub">Keitel</div>
-      <div class="header-title">Charges Perso / Pro</div>
+      <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Keitel</div>
+      <div style="font-size:16px;font-weight:700">Charges Perso / Pro</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
-      <div class="user-badge" id="user-badge"></div>
-      <button class="logout-btn" onclick="logout()">⏏</button>
+      <div id="user-badge" style="border-radius:20px;padding:5px 14px;font-size:13px;font-weight:700"></div>
+      <button onclick="logout()" style="background:none;border:none;color:#64748b;font-size:20px;line-height:1;padding:2px 4px;cursor:pointer">⏏</button>
     </div>
   </div>
 
+  <!-- DASH -->
   <div id="page-dash" class="page active">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <button onclick="prevMonth()" style="background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:10px;padding:6px 18px;font-size:20px">‹</button>
@@ -98,6 +76,7 @@ select.inp option{background:#1e293b}
     <div id="dash-list"></div>
   </div>
 
+  <!-- ADD -->
   <div id="page-add" class="page">
     <div style="font-size:17px;font-weight:700;margin-bottom:20px">Nouvelle dépense</div>
     <div class="lbl">Bénéficiaire</div>
@@ -118,6 +97,7 @@ select.inp option{background:#1e293b}
     <button class="btn-primary" onclick="saveVariable()" id="add-btn">Enregistrer</button>
   </div>
 
+  <!-- FIXED -->
   <div id="page-fixed" class="page">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <div style="font-size:17px;font-weight:700">Charges fixes</div>
@@ -141,13 +121,14 @@ select.inp option{background:#1e293b}
       <input class="inp" type="month" id="fixed-start"/>
       <div id="fixed-err" style="color:#ef4444;font-size:13px;margin-bottom:8px"></div>
       <div style="display:flex;gap:10px">
-        <button onclick="hideFixedForm()" style="flex:1;background:#0f172a;color:#94a3b8;border:1px solid #334155;border-radius:10px;padding:12px;font-size:13px;font-weight:600">Annuler</button>
-        <button onclick="saveFixed()" style="flex:1;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:700">Enregistrer</button>
+        <button onclick="hideFixedForm()" style="flex:1;background:#0f172a;color:#94a3b8;border:1px solid #334155;border-radius:10px;padding:12px;font-size:13px;font-weight:600;cursor:pointer">Annuler</button>
+        <button onclick="saveFixed()" style="flex:1;background:#2563eb;color:white;border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:700;cursor:pointer">Enregistrer</button>
       </div>
     </div>
     <div id="fixed-list"></div>
   </div>
 
+  <!-- ANNUAL -->
   <div id="page-annual" class="page">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <button onclick="prevYear()" style="background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:10px;padding:6px 18px;font-size:20px">‹</button>
@@ -158,6 +139,7 @@ select.inp option{background:#1e293b}
     <div style="margin-top:12px;font-size:11px;color:#64748b;text-align:center">Balance = montant à transférer pour équilibrer à 50/50</div>
   </div>
 
+  <!-- CONFIG -->
   <div id="page-config" class="page">
     <div style="font-size:17px;font-weight:700;margin-bottom:20px">Réglages</div>
     <div style="background:#1e293b;border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid #334155">
@@ -167,7 +149,7 @@ select.inp option{background:#1e293b}
       <div id="config-msg" style="font-size:13px;margin-bottom:10px;min-height:18px"></div>
       <button class="btn-primary" style="border-radius:10px;padding:13px;font-size:14px" onclick="changePin()">Changer le code</button>
     </div>
-    <button onclick="logout()" style="width:100%;background:#1e293b;color:#ef4444;border:1px solid #334155;border-radius:14px;padding:14px;font-size:15px;font-weight:600">Se déconnecter</button>
+    <button onclick="logout()" style="width:100%;background:#1e293b;color:#ef4444;border:1px solid #334155;border-radius:14px;padding:14px;font-size:15px;font-weight:600;cursor:pointer">Se déconnecter</button>
   </div>
 
   <nav id="bottom-nav">
@@ -187,15 +169,12 @@ const DEF_CATS = ['Mutuelle','Téléphone','PER','Loyer Locaux'];
 
 let DB = { config:[], fixed:[], variable:[] };
 let currentUser = null;
-let currentPage = 'dash';
 let dashMonth = curMonth();
 let annualYear = new Date().getFullYear();
 let addPerson = 'julien';
 let fixedPerson = 'julien';
 let editFixedId = null;
-let loading = false;
 
-// ─── UTILS ───────────────────────────────────────────────
 function fmt(n){ return Number(n).toFixed(2).replace('.',',')+' €'; }
 function uid(){ return Math.random().toString(36).slice(2,9); }
 function today(){ return new Date().toISOString().slice(0,10); }
@@ -205,19 +184,39 @@ function hashPin(p){ return String(p.split('').reduce((a,c,i)=>a+c.charCodeAt(0)
 function prevM(m){ const [y,mo]=m.split('-').map(Number); return mo===1?`${y-1}-12`:`${y}-${String(mo-1).padStart(2,'0')}`; }
 function nextM(m){ const [y,mo]=m.split('-').map(Number); return mo===12?`${y+1}-01`:`${y}-${String(mo+1).padStart(2,'0')}`; }
 
-// ─── API ─────────────────────────────────────────────────
-async function apiRead(){
-  const r = await fetch(`${API}?action=read`);
-  const d = await r.json();
-  return d;
+// ─── JSONP ────────────────────────────────────────────────
+let cbCount = 0;
+function jsonp(url) {
+  return new Promise((resolve, reject) => {
+    const cb = '__cb' + (cbCount++);
+    const script = document.createElement('script');
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timeout'));
+    }, 15000);
+    function cleanup(){ delete window[cb]; document.body.removeChild(script); clearTimeout(timer); }
+    window[cb] = (data) => { cleanup(); resolve(data); };
+    script.src = url + '&callback=' + cb;
+    script.onerror = () => { cleanup(); reject(new Error('Script error')); };
+    document.body.appendChild(script);
+  });
 }
 
-async function apiWrite(){
-  const url = `${API}?action=write&data=${encodeURIComponent(JSON.stringify(DB))}`;
-  await fetch(url);
+async function apiRead() {
+  try {
+    const d = await jsonp(`${API}?action=read`);
+    return d;
+  } catch(e) { console.error('apiRead error',e); return null; }
 }
 
-// ─── CONFIG ROW HELPERS ──────────────────────────────────
+async function apiWrite() {
+  try {
+    const data = encodeURIComponent(JSON.stringify(DB));
+    await jsonp(`${API}?action=write&data=${data}`);
+  } catch(e) { console.error('apiWrite error',e); }
+}
+
+// ─── CONFIG ──────────────────────────────────────────────
 function getCfg(key){ const r=DB.config.find(c=>c.key===key); return r?r.value:null; }
 function setCfg(key,value){
   const idx=DB.config.findIndex(c=>c.key===key);
@@ -282,7 +281,6 @@ function goTo(page){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(`page-${page}`).classList.add('active');
   document.querySelector(`[data-page="${page}"]`).classList.add('active');
-  currentPage = page;
   if(page==='dash') renderDash();
   if(page==='fixed') renderFixed();
   if(page==='annual') renderAnnual();
@@ -310,8 +308,7 @@ function renderDash(){
   const balDiv = document.getElementById('dash-balance');
   if(debtor){
     balDiv.style.cssText='background:#1e293b;border:1px solid #334155;border-radius:14px;padding:16px 18px;margin-bottom:14px';
-    const dColor = debtor==='david'?'#4ade80':'#60a5fa';
-    const cColor = creditor==='julien'?'#60a5fa':'#4ade80';
+    const dColor=debtor==='david'?'#4ade80':'#60a5fa', cColor=creditor==='julien'?'#60a5fa':'#4ade80';
     balDiv.innerHTML=`<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Rééquilibrage</div>
     <div style="font-size:14px"><span style="font-weight:700;color:${dColor}">${debtor==='david'?'David':'Julien'}</span>
     <span style="color:#94a3b8"> doit </span><span style="font-weight:700;font-size:20px">${fmt(bal)}</span>
@@ -320,8 +317,7 @@ function renderDash(){
     balDiv.style.cssText='background:#14532d22;border:1px solid #166534;border-radius:14px;padding:16px 18px;margin-bottom:14px;text-align:center';
     balDiv.innerHTML='<span style="color:#4ade80;font-weight:600;font-size:15px">✓ Équilibré</span>';
   }
-  const cards = document.getElementById('dash-cards');
-  cards.innerHTML='';
+  const cards=document.getElementById('dash-cards'); cards.innerHTML='';
   [{p:'julien',f:s.jF,v:s.jV,t:s.jT,c:'#2563eb'},{p:'david',f:s.dF,v:s.dV,t:s.dT,c:'#16a34a'}].forEach(row=>{
     const d=document.createElement('div');
     d.style.cssText=`background:#1e293b;border-radius:12px;padding:14px 12px;border:1px solid ${row.c}33`;
@@ -331,38 +327,34 @@ function renderDash(){
     <div style="font-size:11px;color:#64748b">Variables : ${fmt(row.v)}</div>`;
     cards.appendChild(d);
   });
-  const varList = DB.variable.filter(c=>c.month===dashMonth).sort((a,b)=>b.date.localeCompare(a.date));
-  const listDiv = document.getElementById('dash-list');
-  document.getElementById('dash-label').textContent = varList.length?'Dépenses du mois':'';
+  const varList=DB.variable.filter(c=>c.month===dashMonth).sort((a,b)=>b.date.localeCompare(a.date));
+  const listDiv=document.getElementById('dash-list');
+  document.getElementById('dash-label').textContent=varList.length?'Dépenses du mois':'';
   listDiv.innerHTML='';
-  if(!varList.length){
-    listDiv.innerHTML='<div style="text-align:center;color:#64748b;font-size:13px;margin-top:32px;font-style:italic">Aucune dépense variable ce mois</div>';
-    return;
-  }
+  if(!varList.length){ listDiv.innerHTML='<div style="text-align:center;color:#64748b;font-size:13px;margin-top:32px;font-style:italic">Aucune dépense variable ce mois</div>'; return; }
   varList.forEach(c=>{
-    const row=document.createElement('div');
-    row.className='card';
+    const row=document.createElement('div'); row.className='card';
     const pColor=c.person==='julien'?'#60a5fa':'#4ade80';
     row.innerHTML=`<div style="flex:1;min-width:0">
       <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.label}</div>
       <div style="font-size:11px;color:#64748b">${c.category} · ${c.date.slice(8)}/${c.date.slice(5,7)} · <span style="color:${pColor}">${c.person==='julien'?'Julien':'David'}</span></div>
     </div>
     <div style="font-size:13px;font-weight:700;flex-shrink:0">${fmt(c.amount)}</div>
-    <button onclick="deleteVariable('${c.id}')" style="background:none;border:none;color:#475569;font-size:18px;line-height:1;padding:2px 4px;flex-shrink:0">×</button>`;
+    <button onclick="deleteVariable('${c.id}')" style="background:none;border:none;color:#475569;font-size:18px;line-height:1;padding:2px 4px;flex-shrink:0;cursor:pointer">×</button>`;
     listDiv.appendChild(row);
   });
 }
 
 async function deleteVariable(id){
   if(!confirm('Supprimer cette dépense ?')) return;
-  DB.variable = DB.variable.filter(c=>c.id!==id);
+  DB.variable=DB.variable.filter(c=>c.id!==id);
   renderDash();
   await apiWrite();
 }
 
 // ─── ADD ─────────────────────────────────────────────────
 function initAdd(){
-  document.getElementById('add-date').value = today();
+  document.getElementById('add-date').value=today();
   selectPerson(currentUser||'julien');
   populateCatSelect('add-cat');
   document.getElementById('add-label').value='';
@@ -386,19 +378,15 @@ function populateCatSelect(selId){
   sel.innerHTML='<option value="">— Choisir —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('')+'<option value="__custom__">+ Autre…</option>';
 }
 
-function onCatChange(){
-  document.getElementById('add-custom-cat').style.display=document.getElementById('add-cat').value==='__custom__'?'block':'none';
-}
+function onCatChange(){ document.getElementById('add-custom-cat').style.display=document.getElementById('add-cat').value==='__custom__'?'block':'none'; }
 
 async function saveVariable(){
-  const cat = document.getElementById('add-cat').value==='__custom__'
-    ? document.getElementById('add-custom-cat').value.trim()
-    : document.getElementById('add-cat').value;
-  const label = document.getElementById('add-label').value.trim();
-  const amount = parseFloat(document.getElementById('add-amount').value.replace(',','.'));
-  const date = document.getElementById('add-date').value;
-  const err = document.getElementById('add-err');
-  if(!cat||!label||!date||isNaN(amount)||amount<=0){ err.textContent='Tous les champs sont requis'; return; }
+  const cat=document.getElementById('add-cat').value==='__custom__'?document.getElementById('add-custom-cat').value.trim():document.getElementById('add-cat').value;
+  const label=document.getElementById('add-label').value.trim();
+  const amount=parseFloat(document.getElementById('add-amount').value.replace(',','.'));
+  const date=document.getElementById('add-date').value;
+  const err=document.getElementById('add-err');
+  if(!cat||!label||!date||isNaN(amount)||amount<=0){err.textContent='Tous les champs sont requis';return;}
   err.textContent='';
   const btn=document.getElementById('add-btn');
   btn.innerHTML='<span class="spinner"></span>Enregistrement…';
@@ -442,53 +430,45 @@ function selectFixedPerson(p){
   db.style.border=`2px solid ${p==='david'?'#16a34a':'#334155'}`;
   db.style.background=p==='david'?'#15803d':'#1e293b';
 }
-function onFixedCatChange(){
-  document.getElementById('fixed-custom-cat').style.display=document.getElementById('fixed-cat').value==='__custom__'?'block':'none';
-}
+function onFixedCatChange(){ document.getElementById('fixed-custom-cat').style.display=document.getElementById('fixed-cat').value==='__custom__'?'block':'none'; }
+
 async function saveFixed(){
-  const cat=document.getElementById('fixed-cat').value==='__custom__'
-    ?document.getElementById('fixed-custom-cat').value.trim()
-    :document.getElementById('fixed-cat').value;
+  const cat=document.getElementById('fixed-cat').value==='__custom__'?document.getElementById('fixed-custom-cat').value.trim():document.getElementById('fixed-cat').value;
   const label=document.getElementById('fixed-label').value.trim();
   const amount=parseFloat(document.getElementById('fixed-amount').value.replace(',','.'));
   const startMonth=document.getElementById('fixed-start').value;
   const err=document.getElementById('fixed-err');
   if(!cat||!label||!startMonth||isNaN(amount)||amount<=0){err.textContent='Tous les champs sont requis';return;}
-  err.textContent='';
   const entry={id:editFixedId||uid(),person:fixedPerson,category:cat,label,amount,startMonth};
   if(editFixedId) DB.fixed=DB.fixed.map(c=>c.id===editFixedId?entry:c);
   else DB.fixed.push(entry);
-  hideFixedForm();
-  renderFixed();
-  await apiWrite();
+  hideFixedForm(); renderFixed(); await apiWrite();
 }
+
 async function deleteFixed(id){
   if(!confirm('Supprimer cette charge fixe ?')) return;
   DB.fixed=DB.fixed.filter(c=>c.id!==id);
-  renderFixed();
-  await apiWrite();
+  renderFixed(); await apiWrite();
 }
+
 function renderFixed(){
-  const list=document.getElementById('fixed-list');
-  list.innerHTML='';
-  [{lbl:'Julien',p:'julien',c:'#2563eb'},{lbl:'David',p:'david',c:'#16a34a'}].forEach(({lbl,p,c})=>{
+  const list=document.getElementById('fixed-list'); list.innerHTML='';
+  [{lbl:'Julien',p:'julien'},{lbl:'David',p:'david'}].forEach(({lbl,p})=>{
     const items=DB.fixed.filter(x=>x.person===p);
     const total=items.reduce((s,x)=>s+Number(x.amount),0);
-    const sec=document.createElement('div');
-    sec.style.marginBottom='24px';
+    const sec=document.createElement('div'); sec.style.marginBottom='24px';
     sec.innerHTML=`<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
       <span>${lbl}</span><span style="color:#f1f5f9;font-weight:600">${fmt(total)}/mois</span></div>
       ${items.length===0?'<div style="color:#64748b;font-size:13px;font-style:italic;padding:8px 4px">Aucune charge fixe</div>':''}`;
     items.forEach(x=>{
-      const row=document.createElement('div');
-      row.className='card';
+      const row=document.createElement('div'); row.className='card';
       row.innerHTML=`<div style="flex:1;min-width:0">
         <div style="font-size:13px;font-weight:600">${x.label}</div>
         <div style="font-size:11px;color:#64748b">${x.category} · dès ${ymLabel(x.startMonth)}</div>
       </div>
       <div style="font-size:14px;font-weight:700;flex-shrink:0">${fmt(x.amount)}</div>
-      <button onclick="showFixedForm('${x.id}')" style="background:none;border:none;color:#64748b;font-size:15px;padding:2px 4px;flex-shrink:0">✏️</button>
-      <button onclick="deleteFixed('${x.id}')" style="background:none;border:none;color:#475569;font-size:18px;line-height:1;padding:2px 4px;flex-shrink:0">×</button>`;
+      <button onclick="showFixedForm('${x.id}')" style="background:none;border:none;color:#64748b;font-size:15px;padding:2px 4px;flex-shrink:0;cursor:pointer">✏️</button>
+      <button onclick="deleteFixed('${x.id}')" style="background:none;border:none;color:#475569;font-size:18px;line-height:1;padding:2px 4px;flex-shrink:0;cursor:pointer">×</button>`;
       sec.appendChild(row);
     });
     list.appendChild(sec);
@@ -502,8 +482,7 @@ function renderAnnual(){
   document.getElementById('annual-year-label').textContent=annualYear;
   const months=Array.from({length:12},(_,i)=>`${annualYear}-${String(i+1).padStart(2,'0')}`);
   const rows=months.map((m,i)=>{
-    const s=calcMonth(m);
-    const b=Math.abs(s.diff)/2;
+    const s=calcMonth(m), b=Math.abs(s.diff)/2;
     const dbt=s.diff>0.005?'D':s.diff<-0.005?'J':null;
     const bal=!dbt?`<span style="color:#4ade80">≈ 0</span>`:`<span style="color:#fbbf24">${dbt}→${dbt==='D'?'J':'D'} ${fmt(b)}</span>`;
     return `<tr style="border-top:1px solid #334155;background:${i%2===0?'transparent':'#ffffff06'}">
@@ -512,17 +491,16 @@ function renderAnnual(){
       <td style="padding:10px 12px;text-align:right;color:#86efac">${fmt(s.dT)}</td>
       <td style="padding:10px 12px;text-align:right;font-size:12px">${bal}</td></tr>`;
   }).join('');
-  const totJ=months.reduce((s,m)=>s+calcMonth(m).jT,0);
-  const totD=months.reduce((s,m)=>s+calcMonth(m).dT,0);
+  const totJ=months.reduce((s,m)=>s+calcMonth(m).jT,0), totD=months.reduce((s,m)=>s+calcMonth(m).dT,0);
   const totBal=Math.abs(totJ-totD)<0.01?'Équilibré':`Δ ${fmt(Math.abs(totJ-totD)/2)}`;
   document.getElementById('annual-table').innerHTML=`
   <div style="background:#1e293b;border-radius:14px;overflow:hidden;border:1px solid #334155">
   <table style="width:100%;border-collapse:collapse;font-size:13px">
   <thead><tr style="background:#0f172a">
-    <th style="text-align:left;padding:10px 12px;color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">Mois</th>
-    <th style="text-align:right;padding:10px 12px;color:#93c5fd;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">Julien</th>
-    <th style="text-align:right;padding:10px 12px;color:#86efac;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">David</th>
-    <th style="text-align:right;padding:10px 12px;color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;font-weight:500">Balance</th>
+    <th style="text-align:left;padding:10px 12px;color:#64748b;font-size:11px;text-transform:uppercase;font-weight:500">Mois</th>
+    <th style="text-align:right;padding:10px 12px;color:#93c5fd;font-size:11px;text-transform:uppercase;font-weight:500">Julien</th>
+    <th style="text-align:right;padding:10px 12px;color:#86efac;font-size:11px;text-transform:uppercase;font-weight:500">David</th>
+    <th style="text-align:right;padding:10px 12px;color:#64748b;font-size:11px;text-transform:uppercase;font-weight:500">Balance</th>
   </tr></thead>
   <tbody>${rows}</tbody>
   <tfoot><tr style="border-top:2px solid #334155;background:#0f172a">
@@ -530,11 +508,10 @@ function renderAnnual(){
     <td style="padding:12px;text-align:right;color:#93c5fd;font-weight:700">${fmt(totJ)}</td>
     <td style="padding:12px;text-align:right;color:#86efac;font-weight:700">${fmt(totD)}</td>
     <td style="padding:12px;text-align:right;color:#fbbf24;font-size:12px;font-weight:700">${totBal}</td>
-  </tr></tfoot>
-  </table></div>`;
+  </tr></tfoot></table></div>`;
 }
 
-// ─── CONFIG ──────────────────────────────────────────────
+// ─── CONFIG PIN ───────────────────────────────────────────
 async function changePin(){
   const p1=document.getElementById('new-pin1').value.replace(/\D/g,'');
   const p2=document.getElementById('new-pin2').value.replace(/\D/g,'');
@@ -545,7 +522,7 @@ async function changePin(){
   await apiWrite();
   document.getElementById('new-pin1').value='';
   document.getElementById('new-pin2').value='';
-  msg.style.color='#4ade80';msg.textContent='✓ Code modifié';
+  msg.style.color='#4ade80'; msg.textContent='✓ Code modifié';
   setTimeout(()=>msg.textContent='',2500);
 }
 
@@ -558,7 +535,7 @@ async function init(){
       DB.fixed = (d.fixed||[]).map(r=>({...r,amount:Number(r.amount)}));
       DB.variable = (d.variable||[]).map(r=>({...r,amount:Number(r.amount)}));
     }
-  } catch(e){ console.warn('API init error',e); }
+  } catch(e){ console.warn('Init error',e); }
 }
 
 init();
