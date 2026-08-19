@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Logo Keitel (placeholder)">
+  <!-- PLACEHOLDER : remplacer par le vrai symbole rouge fourni -->
+  <path d="M60 6 C40 20 20 20 6 60 C20 100 40 100 60 114 C80 100 100 100 114 60 C100 20 80 20 60 6 Z" fill="#c0392b"/>
+  <path d="M60 34 L68 52 L86 60 L68 68 L60 86 L52 68 L34 60 L52 52 Z" fill="#fff"/>
+</svg>

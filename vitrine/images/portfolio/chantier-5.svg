@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Chantier 5">
+  <rect width="800" height="600" fill="#e9ebee"/>
+  <rect x="10" y="10" width="780" height="580" fill="none" stroke="#c0392b" stroke-width="3" stroke-dasharray="14 10"/>
+  <text x="50%" y="46%" font-family="system-ui,sans-serif" font-size="34" fill="#c0392b" text-anchor="middle" font-weight="700">PHOTO À REMPLACER</text>
+  <text x="50%" y="58%" font-family="system-ui,sans-serif" font-size="26" fill="#8a949e" text-anchor="middle">Chantier 5</text>
+</svg>

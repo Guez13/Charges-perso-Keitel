@@ -1,0 +1,40 @@
+=================================================================
+INSTALLATION DE PHPMailer (requis pour l'envoi SMTP OVH)
+=================================================================
+
+Le formulaire est configuré pour envoyer les emails via PHPMailer
+(method = 'smtp' dans config.php), meilleure solution de
+délivrabilité sur OVH.
+
+Il faut placer la librairie PHPMailer dans ce dossier. Deux méthodes :
+
+-----------------------------------------------------------------
+MÉTHODE A — Téléchargement manuel (la plus simple, sans outil)
+-----------------------------------------------------------------
+1. Aller sur : https://github.com/PHPMailer/PHPMailer/releases
+2. Télécharger la dernière archive « Source code (zip) ».
+3. Dézipper, puis copier UNIQUEMENT le dossier « src/ » ici, de
+   façon à obtenir l'arborescence suivante :
+
+   php/PHPMailer/src/PHPMailer.php
+   php/PHPMailer/src/SMTP.php
+   php/PHPMailer/src/Exception.php
+
+   (les autres fichiers de src/ peuvent rester, ce n'est pas gênant)
+
+-----------------------------------------------------------------
+MÉTHODE B — Composer (si disponible en local)
+-----------------------------------------------------------------
+   composer require phpmailer/phpmailer
+   puis copier vendor/phpmailer/phpmailer/src ici (php/PHPMailer/src).
+
+-----------------------------------------------------------------
+IMPORTANT
+-----------------------------------------------------------------
+- Si le dossier src/ est absent, send-devis.php bascule
+  automatiquement sur la fonction mail() native (fallback), pour
+  que le formulaire fonctionne quand même. Mais la délivrabilité
+  sera moins bonne : installez PHPMailer dès que possible.
+
+- Ne pas oublier de renseigner les identifiants SMTP dans
+  ../config.php (section 'smtp').

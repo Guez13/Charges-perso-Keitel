@@ -1,0 +1,46 @@
+# =================================================================
+# KEITEL — .htaccess (hébergement mutualisé type OVH / Apache)
+# Cache navigateur, compression, en-têtes de sécurité de base.
+# =================================================================
+
+# ---- Compression gzip ----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---- Cache navigateur (performances) ----
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css            "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/jpeg          "access plus 6 months"
+  ExpiresByType image/png           "access plus 6 months"
+  ExpiresByType image/webp          "access plus 6 months"
+  ExpiresByType image/svg+xml       "access plus 6 months"
+  ExpiresByType text/html           "access plus 1 day"
+</IfModule>
+
+# ---- En-têtes de sécurité de base ----
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ---- Protéger le fichier de configuration ----
+<Files "config.php">
+  Require all denied
+</Files>
+
+# ---- Page d'accueil par défaut ----
+DirectoryIndex index.html index.php
+
+# ---- (Optionnel) Forcer HTTPS une fois le certificat SSL activé sur OVH ----
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ---- (Optionnel) Forcer le www ou le non-www — décommenter au choix ----
+# RewriteEngine On
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
