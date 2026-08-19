@@ -302,6 +302,7 @@ ul { margin: 0; padding: 0; }
 .footer-social { display: flex; flex-direction: column; gap: 8px; }
 .footer-legal { border-top: 1px solid rgba(255,255,255,.1); padding: 16px 0; font-size: .82rem; }
 .footer-legal p { margin: 0; color: #9aa1a8; }
+.footer-legal .legal-details { font-size: .78rem; color: #7c858d; margin-top: 6px; line-height: 1.7; }
 .footer-legal a { color: #c8cdd2; }
 
 /* ================================================================

@@ -26,24 +26,27 @@
   <link rel="stylesheet" href="css/style.css">
 
   <!-- ============================================================
-       SCHEMA.ORG LocalBusiness — À COMPLÉTER avec les vraies infos
-       (SIRET, adresse exacte, téléphone, horaires, coordonnées GPS)
+       SCHEMA.ORG LocalBusiness — SEO local
+       (URL du site à renseigner une fois le domaine OVH connu)
        ============================================================ -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "GeneralContractor",
     "name": "Keitel",
+    "legalName": "SARL Keitel",
     "description": "Entreprise de maçonnerie et rénovation à Aix-en-Provence.",
     "image": "https://www.exemple-keitel.fr/images/logo/logo-placeholder.svg",
     "url": "https://www.exemple-keitel.fr/",
-    "telephone": "+33600000000",
+    "telephone": "+33665970155",
+    "email": "contact.keitel@gmail.com",
     "priceRange": "€€",
+    "vatID": "FR09999192537",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "À COMPLÉTER",
+      "streetAddress": "8 rue du Pont",
       "addressLocality": "Aix-en-Provence",
-      "postalCode": "13100",
+      "postalCode": "13290",
       "addressRegion": "Provence-Alpes-Côte d'Azur",
       "addressCountry": "FR"
     },
@@ -52,14 +55,6 @@
       { "@type": "City", "name": "Pertuis" },
       { "@type": "City", "name": "Gardanne" },
       { "@type": "City", "name": "Venelles" }
-    ],
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-        "opens": "08:00",
-        "closes": "18:00"
-      }
     ]
   }
   </script>
@@ -100,10 +95,9 @@
 
     <!-- Actions header : téléphone + CTA devis -->
     <div class="header-actions">
-      <!-- TÉLÉPHONE À REMPLACER (format international pour le lien tel:) -->
-      <a href="tel:+33600000000" class="header-phone" aria-label="Appeler Keitel">
+      <a href="tel:+33665970155" class="header-phone" aria-label="Appeler Keitel">
         <span aria-hidden="true">☎</span>
-        <span class="phone-number">06 00 00 00 00</span>
+        <span class="phone-number">06 65 97 01 55</span>
       </a>
       <a href="#devis" class="btn btn-primary btn-sm header-cta">Demander un devis</a>
     </div>
@@ -134,7 +128,7 @@
       </p>
       <div class="hero-cta">
         <a href="#devis" class="btn btn-primary btn-lg">Demander un devis gratuit</a>
-        <a href="tel:+33600000000" class="btn btn-ghost btn-lg">☎ Nous appeler</a>
+        <a href="tel:+33665970155" class="btn btn-ghost btn-lg">☎ Nous appeler</a>
       </div>
       <ul class="hero-badges">
         <li>✔ Devis sous 48h</li>
@@ -471,21 +465,14 @@
 
         <div class="contact-block">
           <h3>Téléphone</h3>
-          <p><a href="tel:+33600000000">06 00 00 00 00</a></p>
-          <p class="contact-note">Du lundi au vendredi</p>
+          <p><a href="tel:+33665970155">06 65 97 01 55</a></p>
+          <p class="contact-note">Devis gratuit</p>
         </div>
 
         <div class="contact-block">
           <h3>Email</h3>
-          <!-- EMAIL À REMPLACER -->
-          <p><a href="mailto:contact@exemple-keitel.fr">contact@exemple-keitel.fr</a></p>
+          <p><a href="mailto:contact.keitel@gmail.com">contact.keitel@gmail.com</a></p>
           <p class="contact-note">Réponse sous 48h</p>
-        </div>
-
-        <div class="contact-block">
-          <h3>Horaires</h3>
-          <p>Lun – Ven : 8h00 – 18h00</p>
-          <p class="contact-note">Interventions sur RDV</p>
         </div>
 
         <div class="contact-block">
@@ -530,11 +517,13 @@
 
   <div class="footer-legal">
     <div class="container">
-      <p>
-        © <span id="year"></span> Keitel — Tous droits réservés.
-        <!-- MENTIONS LÉGALES À COMPLÉTER : SIRET, forme juridique, assurance décennale -->
-        SIRET&nbsp;: 000&nbsp;000&nbsp;000&nbsp;00000 · Assurance décennale&nbsp;: [assureur].
-        <a href="#accueil">Mentions légales</a>
+      <p>© <span id="year"></span> SARL Keitel — Tous droits réservés.</p>
+      <p class="legal-details">
+        SARL Keitel · Siège&nbsp;: 8 rue du Pont, 13290 Aix-en-Provence ·
+        SIRET&nbsp;: 999&nbsp;192&nbsp;537&nbsp;00010 · RCS Aix-en-Provence 999&nbsp;192&nbsp;537 ·
+        TVA intracommunautaire&nbsp;: FR&nbsp;09&nbsp;999&nbsp;192&nbsp;537.
+        <br>
+        Assurance décennale&nbsp;: Entoria — 166 rue Jules Guesde, 92300 Levallois-Perret.
       </p>
     </div>
   </div>
