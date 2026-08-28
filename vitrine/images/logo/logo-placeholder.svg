@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Logo Keitel (placeholder)">
-  <!-- PLACEHOLDER : remplacer par le vrai symbole rouge fourni -->
-  <path d="M60 6 C40 20 20 20 6 60 C20 100 40 100 60 114 C80 100 100 100 114 60 C100 20 80 20 60 6 Z" fill="#c0392b"/>
-  <path d="M60 34 L68 52 L86 60 L68 68 L60 86 L52 68 L34 60 L52 52 Z" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Keitel">
+  <!-- Carré à côtés concaves (rouge), pointes aux 4 coins -->
+  <path d="M12 12 Q50 36 88 12 Q64 50 88 88 Q50 64 12 88 Q36 50 12 12 Z" fill="#ff1f1f"/>
+  <!-- Étoile 4 branches (creux) pointant vers les 4 côtés -->
+  <path d="M50 23 L56 44 L77 50 L56 56 L50 77 L44 56 L23 50 L44 44 Z" fill="#000"/>
 </svg>

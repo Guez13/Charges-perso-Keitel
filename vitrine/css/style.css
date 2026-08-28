@@ -118,19 +118,21 @@ ul { margin: 0; padding: 0; }
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   height: var(--header-h);
-  background: rgba(28,33,38,.96);
-  backdrop-filter: saturate(120%) blur(6px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.55);              /* noir moderne, translucide */
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 .header-inner {
   height: var(--header-h);
   display: flex; align-items: center; gap: 16px;
 }
 
-.logo { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 800; font-size: 1.3rem; }
+.logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.3rem; }
 .logo:hover { text-decoration: none; }
-.logo-mark { color: var(--accent-light); font-size: 1.5rem; line-height: 1; }
+.logo-mark { width: 36px; height: 36px; display: block; }
 .logo-text { letter-spacing: .5px; }
+.logo-k { color: var(--accent); }
 
 .main-nav { margin-left: auto; }
 .main-nav ul { display: flex; gap: 22px; list-style: none; }
@@ -319,8 +321,9 @@ ul { margin: 0; padding: 0; }
    ================================================================ */
 .site-footer { background: var(--bg-dark); color: #c8cdd2; padding-top: 44px; }
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; padding-bottom: 30px; }
-.footer-brand .logo-mark { color: var(--accent-light); font-size: 1.4rem; }
-.footer-brand .logo-text { color: #fff; font-weight: 800; font-size: 1.2rem; margin-left: 6px; }
+.footer-brand-row { display: flex; align-items: center; gap: 10px; }
+.footer-brand .logo-mark { width: 32px; height: 32px; }
+.footer-brand .logo-text { color: #fff; font-weight: 800; font-size: 1.2rem; }
 .footer-brand p { margin: 10px 0 0; font-size: .9rem; max-width: 34ch; }
 .footer-nav { display: flex; flex-direction: column; gap: 8px; }
 .footer-nav a, .footer-social a { color: #c8cdd2; }
