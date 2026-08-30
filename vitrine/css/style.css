@@ -186,6 +186,11 @@ ul { margin: 0; padding: 0; }
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 .cards-grid-4 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
 
+/* Services : 8 cartes -> 4 colonnes (2 rangées de 4), symétrique */
+.services-grid { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 980px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .services-grid { grid-template-columns: 1fr; } }
+
 .card {
   background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg);
   padding: 26px 24px; transition: transform .15s ease, box-shadow .15s ease;
