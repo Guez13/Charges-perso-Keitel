@@ -221,56 +221,75 @@
         <p class="section-sub">Quelques exemples de projets menés dans le pays aixois. Photos à remplacer par vos vrais chantiers (avant/après).</p>
       </header>
 
-      <!-- Carrousel portfolio : défile seul vers la droite à l'entrée
-           dans l'écran (JS), et se fait glisser/swiper à la main.
-           Chaque bouton ouvre la lightbox.
-           PHOTOS À REMPLACER. data-full = version grande taille. -->
+      <!-- Carrousel portfolio : défile seul à l'entrée dans l'écran (JS),
+           se fait glisser/swiper à la main. Deux types de vignettes :
+           • .ba-item  = comparateur AVANT / APRÈS (curseur à glisser)
+           • .portfolio-item (button) = photo simple (agrandie au clic)
+           PHOTOS À REMPLACER. -->
       <div class="portfolio-carousel" id="portfolio-carousel">
 
+        <!-- AVANT / APRÈS : Rénovation cuisine -->
+        <div class="portfolio-item ba-item">
+          <div class="ba" style="--pos:50%">
+            <img class="ba-after"  src="images/portfolio/apres-placeholder.svg" alt="Cuisine rénovée (après)">
+            <img class="ba-before" src="images/portfolio/avant-placeholder.svg" alt="Cuisine avant travaux">
+            <span class="ba-label ba-label-before">Avant</span>
+            <span class="ba-label ba-label-after">Après</span>
+            <div class="ba-divider"><span class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5V7zm8 0v10l5-5-5-5z"/></svg></span></div>
+          </div>
+          <span class="portfolio-tag">Cuisine</span>
+        </div>
+
+        <!-- Photo simple : Carrelage -->
         <button class="portfolio-item" data-full="images/portfolio/chantier-1.svg"
-                data-caption="Construction d'un mur en parpaing — Aix-en-Provence">
+                data-caption="Pose de carrelage grand format">
           <img src="images/portfolio/chantier-1.svg" loading="lazy"
-               alt="Chantier de maçonnerie n°1 (photo à remplacer)" width="800" height="600">
-          <span class="portfolio-tag">Maçonnerie</span>
+               alt="Chantier de carrelage (photo à remplacer)" width="800" height="600">
+          <span class="portfolio-tag">Carrelage</span>
         </button>
 
-        <button class="portfolio-item" data-full="images/portfolio/chantier-2.svg"
-                data-caption="Rénovation d'une façade — avant / après">
-          <img src="images/portfolio/chantier-2.svg" loading="lazy"
-               alt="Chantier de rénovation n°2 (photo à remplacer)" width="800" height="600">
-          <span class="portfolio-tag">Rénovation</span>
-        </button>
+        <!-- AVANT / APRÈS : Salle de bain -->
+        <div class="portfolio-item ba-item">
+          <div class="ba" style="--pos:50%">
+            <img class="ba-after"  src="images/portfolio/apres-placeholder.svg" alt="Salle de bain rénovée (après)">
+            <img class="ba-before" src="images/portfolio/avant-placeholder.svg" alt="Salle de bain avant travaux">
+            <span class="ba-label ba-label-before">Avant</span>
+            <span class="ba-label ba-label-after">Après</span>
+            <div class="ba-divider"><span class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5V7zm8 0v10l5-5-5-5z"/></svg></span></div>
+          </div>
+          <span class="portfolio-tag">Salle de bain</span>
+        </div>
 
+        <!-- Photo simple : Terrasse -->
         <button class="portfolio-item" data-full="images/portfolio/chantier-3.svg"
-                data-caption="Création d'une terrasse béton">
+                data-caption="Création d'une terrasse">
           <img src="images/portfolio/chantier-3.svg" loading="lazy"
-               alt="Chantier de terrasse n°3 (photo à remplacer)" width="800" height="600">
-          <span class="portfolio-tag">Extérieur</span>
+               alt="Chantier de terrasse (photo à remplacer)" width="800" height="600">
+          <span class="portfolio-tag">Terrasse</span>
         </button>
 
-        <button class="portfolio-item" data-full="images/portfolio/chantier-4.svg"
-                data-caption="Extension de maison en maçonnerie">
-          <img src="images/portfolio/chantier-4.svg" loading="lazy"
-               alt="Chantier d'extension n°4 (photo à remplacer)" width="800" height="600">
-          <span class="portfolio-tag">Extension</span>
-        </button>
+        <!-- AVANT / APRÈS : Peinture / rénovation pièce -->
+        <div class="portfolio-item ba-item">
+          <div class="ba" style="--pos:50%">
+            <img class="ba-after"  src="images/portfolio/apres-placeholder.svg" alt="Pièce repeinte (après)">
+            <img class="ba-before" src="images/portfolio/avant-placeholder.svg" alt="Pièce avant peinture">
+            <span class="ba-label ba-label-before">Avant</span>
+            <span class="ba-label ba-label-after">Après</span>
+            <div class="ba-divider"><span class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5V7zm8 0v10l5-5-5-5z"/></svg></span></div>
+          </div>
+          <span class="portfolio-tag">Peinture</span>
+        </div>
 
+        <!-- Photo simple : Clôture -->
         <button class="portfolio-item" data-full="images/portfolio/chantier-5.svg"
-                data-caption="Ouverture d'un mur porteur">
+                data-caption="Pose d'une clôture">
           <img src="images/portfolio/chantier-5.svg" loading="lazy"
-               alt="Chantier d'ouverture de mur n°5 (photo à remplacer)" width="800" height="600">
-          <span class="portfolio-tag">Rénovation</span>
-        </button>
-
-        <button class="portfolio-item" data-full="images/portfolio/chantier-6.svg"
-                data-caption="Enduit de façade traditionnel">
-          <img src="images/portfolio/chantier-6.svg" loading="lazy"
-               alt="Chantier d'enduit n°6 (photo à remplacer)" width="800" height="600">
-          <span class="portfolio-tag">Façade</span>
+               alt="Chantier de clôture (photo à remplacer)" width="800" height="600">
+          <span class="portfolio-tag">Clôture</span>
         </button>
 
       </div>
-      <p class="portfolio-hint">← Faites glisser pour parcourir les chantiers →</p>
+      <p class="portfolio-hint">← Glissez pour parcourir · sur une vignette « Avant / Après », déplacez le curseur →</p>
 
       <!-- Vidéos : renvoi vers l'Instagram de l'entreprise. -->
       <div class="video-cta">

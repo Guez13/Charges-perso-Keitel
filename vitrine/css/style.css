@@ -246,6 +246,41 @@ ul { margin: 0; padding: 0; }
 }
 .portfolio-hint { text-align: center; color: var(--ink-soft); font-size: .85rem; margin-top: 6px; }
 
+/* ---- Comparateur avant / après (curseur) ---- */
+.ba-item { cursor: default; }                 /* pas de lightbox sur un slider */
+.ba { position: absolute; inset: 0; overflow: hidden; touch-action: pan-y; user-select: none; }
+.ba img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  pointer-events: none; -webkit-user-drag: none;
+}
+/* L'image « avant » est rognée à droite selon la position du curseur */
+.ba-before { clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0); }
+
+.ba-label {
+  position: absolute; top: 10px; z-index: 3;
+  font-size: .72rem; font-weight: 700; letter-spacing: .5px;
+  padding: 4px 10px; border-radius: 20px; color: #fff;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(2px);
+}
+.ba-label-before { left: 10px; }
+.ba-label-after  { right: 10px; }
+
+/* Trait vertical + poignée */
+.ba-divider {
+  position: absolute; top: 0; bottom: 0; z-index: 2;
+  left: var(--pos, 50%); width: 3px; margin-left: -1.5px;
+  background: #fff; box-shadow: 0 0 8px rgba(0,0,0,.5);
+}
+.ba-handle {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,.5); font-size: 1rem;
+}
+.ba-handle svg { width: 22px; height: 22px; fill: #fff; }
+.ba:hover .ba-divider, .ba:focus-within .ba-divider { background: #fff; }
+
 /* Bloc « Vidéos » -> lien vers Instagram */
 .video-cta {
   margin-top: 34px; text-align: center;

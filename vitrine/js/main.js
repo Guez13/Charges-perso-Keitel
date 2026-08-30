@@ -46,7 +46,8 @@
   var lbClose = document.getElementById('lightbox-close');
   var lbPrev = document.getElementById('lightbox-prev');
   var lbNext = document.getElementById('lightbox-next');
-  var items = Array.prototype.slice.call(document.querySelectorAll('.portfolio-item'));
+  // Lightbox : uniquement les photos simples (pas les comparateurs avant/après)
+  var items = Array.prototype.slice.call(document.querySelectorAll('.portfolio-item:not(.ba-item)'));
   var currentIndex = 0;
   var lastFocused = null;
 
@@ -171,6 +172,9 @@
     var isDown = false, startX = 0, startScroll = 0, moved = 0;
 
     carousel.addEventListener('pointerdown', function (e) {
+      // Ne pas déclencher le défilement du carrousel si on manipule un
+      // comparateur avant/après (il gère son propre glissement).
+      if (e.target.closest('.ba')) { return; }
       isDown = true; moved = 0;
       startX = e.clientX;
       startScroll = carousel.scrollLeft;
@@ -202,7 +206,47 @@
   }
 
   /* -------------------------------------------------------------
-     5. FALLBACK LAZY-LOADING
+     5. COMPARATEUR AVANT / APRÈS (curseur à glisser)
+     Chaque .ba affiche deux images superposées ; la position du
+     curseur (--pos) rogne l'image « avant » pour révéler l'« après ».
+     Fonctionne à la souris, au doigt et au clic n'importe où.
+     ------------------------------------------------------------- */
+  Array.prototype.forEach.call(document.querySelectorAll('.ba'), function (ba) {
+    var dragging = false;
+
+    function setPos(clientX) {
+      var rect = ba.getBoundingClientRect();
+      var pct = ((clientX - rect.left) / rect.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      ba.style.setProperty('--pos', pct + '%');
+    }
+
+    ba.addEventListener('pointerdown', function (e) {
+      dragging = true;
+      ba.setPointerCapture && ba.setPointerCapture(e.pointerId);
+      setPos(e.clientX);
+      e.preventDefault();
+    });
+    ba.addEventListener('pointermove', function (e) {
+      if (dragging) { setPos(e.clientX); }
+    });
+    function stop() { dragging = false; }
+    ba.addEventListener('pointerup', stop);
+    ba.addEventListener('pointercancel', stop);
+
+    // Accessibilité clavier : flèches gauche/droite quand le slider a le focus
+    ba.setAttribute('tabindex', '0');
+    ba.setAttribute('role', 'slider');
+    ba.setAttribute('aria-label', 'Comparer avant / après');
+    ba.addEventListener('keydown', function (e) {
+      var cur = parseFloat(ba.style.getPropertyValue('--pos')) || 50;
+      if (e.key === 'ArrowLeft')  { ba.style.setProperty('--pos', Math.max(0, cur - 5) + '%'); }
+      if (e.key === 'ArrowRight') { ba.style.setProperty('--pos', Math.min(100, cur + 5) + '%'); }
+    });
+  });
+
+  /* -------------------------------------------------------------
+     6. FALLBACK LAZY-LOADING
      Les images utilisent loading="lazy" (natif). Rien à faire
      pour les navigateurs récents ; ce bloc est laissé comme
      point d'extension si un polyfill devenait nécessaire.
