@@ -228,7 +228,7 @@
       e.preventDefault();
     });
     ba.addEventListener('pointermove', function (e) {
-      if (dragging) { setPos(e.clientX); }
+      if (dragging) { setPos(e.clientX); e.preventDefault(); }
     });
     function stop() { dragging = false; }
     ba.addEventListener('pointerup', stop);
