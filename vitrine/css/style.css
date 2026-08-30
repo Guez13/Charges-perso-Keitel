@@ -210,18 +210,8 @@ ul { margin: 0; padding: 0; }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .service-icon, .atout-icon { font-size: 2rem; margin-bottom: 12px; }
 
-/* Cartes services : croquis « plan d'architecte » en fond (mode esquisse) */
-.service-card { position: relative; overflow: hidden; min-height: 190px; }
-.service-card h3, .service-card p { position: relative; z-index: 1; }
-.service-sketch {
-  position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;
-  pointer-events: none;
-  color: var(--accent); fill: none; stroke: currentColor;
-  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
-  opacity: .14; filter: url(#sketch);
-  transition: opacity .25s ease;
-}
-.service-card:hover .service-sketch { opacity: .24; }
+/* Cartes services (fond propre — le style « croquis » se fera avec de vraies images) */
+.service-card { position: relative; }
 .service-card h3, .atout h3 { font-size: 1.15rem; margin: 0 0 8px; }
 .service-card p, .atout p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
 
