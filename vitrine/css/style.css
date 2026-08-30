@@ -159,11 +159,23 @@ ul { margin: 0; padding: 0; }
 /* ================================================================
    HERO
    ================================================================ */
-.hero { position: relative; min-height: 88vh; display: flex; align-items: center; color: #fff; margin-top: var(--header-h); }
-.hero-media { position: absolute; inset: 0; z-index: 0; }
-.hero-media img { width: 100%; height: 100%; object-fit: cover; }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,24,28,.86) 0%, rgba(20,24,28,.55) 60%, rgba(20,24,28,.35) 100%); }
-.hero-content { position: relative; z-index: 1; padding-top: 40px; padding-bottom: 40px; }
+.hero { color: #fff; padding: calc(var(--header-h) + 48px) 0 60px; background: var(--bg); }
+.hero-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 44px; align-items: center; }
+.hero-content { min-width: 0; }
+
+/* Diaporama : cadre portrait, photos à leur échelle -> nettes */
+.hero-slideshow {
+  position: relative; width: 100%; max-width: 440px; justify-self: end;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow); border: 1px solid var(--line);
+  background: var(--panel);
+}
+.hero-slide {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 1s ease;
+}
+.hero-slide.is-active { opacity: 1; }
 .hero-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; font-weight: 700; color: var(--accent-light); margin: 0 0 10px; }
 .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 10px; max-width: 16ch; color: #fff; }
 .hero-slogan { font-style: italic; color: var(--accent-light); font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 600; margin: 0 0 16px; }
@@ -422,6 +434,9 @@ ul { margin: 0; padding: 0; }
 @media (max-width: 860px) {
   .zone-layout { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
+  /* Hero : le texte au-dessus, le diaporama en dessous */
+  .hero-inner { grid-template-columns: 1fr; gap: 28px; }
+  .hero-slideshow { justify-self: center; max-width: 420px; }
 }
 
 @media (max-width: 760px) {

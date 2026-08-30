@@ -246,7 +246,25 @@
   });
 
   /* -------------------------------------------------------------
-     6. FALLBACK LAZY-LOADING
+     6. DIAPORAMA DU HERO (fondu automatique entre les photos)
+     ------------------------------------------------------------- */
+  var slideshow = document.getElementById('hero-slideshow');
+  if (slideshow) {
+    var slides = slideshow.querySelectorAll('.hero-slide');
+    var reduce = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (slides.length > 1 && !reduce) {
+      var idx = 0;
+      setInterval(function () {
+        slides[idx].classList.remove('is-active');
+        idx = (idx + 1) % slides.length;
+        slides[idx].classList.add('is-active');
+      }, 4500);
+    }
+  }
+
+  /* -------------------------------------------------------------
+     7. FALLBACK LAZY-LOADING
      Les images utilisent loading="lazy" (natif). Rien à faire
      pour les navigateurs récents ; ce bloc est laissé comme
      point d'extension si un polyfill devenait nécessaire.

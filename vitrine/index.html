@@ -113,30 +113,36 @@
        2. HERO
        ================================================================ -->
   <section class="hero" id="accueil">
-    <div class="hero-media">
-      <img src="images/portfolio/piscine-1.jpg"
-           alt="Terrasse bois et piscine réalisées par Keitel à Aix-en-Provence"
-           width="1200" height="1600">
-      <div class="hero-overlay"></div>
-    </div>
+    <div class="container hero-inner">
 
-    <div class="container hero-content">
-      <p class="hero-eyebrow">Rénovation &amp; aménagement · Pays aixois</p>
-      <h1>Rénovation à Aix-en-Provence</h1>
-      <p class="hero-slogan">Votre projet, notre savoir-faire.</p>
-      <p class="hero-lead">
-        Peinture, carrelage, cuisines, salles de bain, terrasses…
-        un artisan tous corps d'état, réactif et soigné, dans tout le pays aixois.
-        Devis gratuit et sans engagement.
-      </p>
-      <div class="hero-cta">
-        <a href="#devis" class="btn btn-primary btn-lg">Demander un devis gratuit</a>
-        <a href="tel:+33665970155" class="btn btn-ghost btn-lg">☎ Nous appeler</a>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Rénovation &amp; aménagement · Pays aixois</p>
+        <h1>Rénovation à Aix-en-Provence</h1>
+        <p class="hero-slogan">Votre projet, notre savoir-faire.</p>
+        <p class="hero-lead">
+          Peinture, carrelage, cuisines, salles de bain, terrasses…
+          un artisan tous corps d'état, réactif et soigné, dans tout le pays aixois.
+          Devis gratuit et sans engagement.
+        </p>
+        <div class="hero-cta">
+          <a href="#devis" class="btn btn-primary btn-lg">Demander un devis gratuit</a>
+          <a href="tel:+33665970155" class="btn btn-ghost btn-lg">☎ Nous appeler</a>
+        </div>
+        <ul class="hero-badges">
+          <li>✔ Assurance décennale</li>
+          <li>✔ Déplacement offert</li>
+        </ul>
       </div>
-      <ul class="hero-badges">
-        <li>✔ Assurance décennale</li>
-        <li>✔ Déplacement offert</li>
-      </ul>
+
+      <!-- Diaporama : photos portrait affichées à leur taille (nettes),
+           défilement en fondu géré par le JS. -->
+      <div class="hero-slideshow" id="hero-slideshow" aria-hidden="true">
+        <img class="hero-slide is-active" src="images/portfolio/terrasse-apres.jpg" alt="" fetchpriority="high">
+        <img class="hero-slide" src="images/portfolio/piscine-1.jpg" alt="" loading="lazy">
+        <img class="hero-slide" src="images/portfolio/bonardel-apres.jpg" alt="" loading="lazy">
+        <img class="hero-slide" src="images/portfolio/negrel-apres.jpg" alt="" loading="lazy">
+      </div>
+
     </div>
   </section>
 
