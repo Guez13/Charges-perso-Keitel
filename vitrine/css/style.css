@@ -131,8 +131,8 @@ ul { margin: 0; padding: 0; }
 .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.3rem; }
 .logo:hover { text-decoration: none; }
 .logo-mark { width: 36px; height: 36px; display: block; }
-.logo-text { letter-spacing: .5px; }
-.logo-k { color: var(--accent); }
+.logo-text { letter-spacing: .5px; color: #fff; }   /* « eitel » en blanc */
+.logo-k { color: var(--accent); }                    /* « K » en rouge */
 
 .main-nav { margin-left: auto; }
 .main-nav ul { display: flex; gap: 22px; list-style: none; }
