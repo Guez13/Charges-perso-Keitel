@@ -198,10 +198,9 @@ ul { margin: 0; padding: 0; }
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 .cards-grid-4 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
 
-/* Services : 8 cartes -> 4 colonnes (2 rangées de 4), symétrique */
-.services-grid { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 980px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px)  { .services-grid { grid-template-columns: 1fr; } }
+/* Services : bandes « croquis » -> 2 colonnes, 1 sur mobile */
+.services-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 720px) { .services-grid { grid-template-columns: 1fr; } }
 
 .card {
   background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg);
@@ -210,8 +209,26 @@ ul { margin: 0; padding: 0; }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .service-icon, .atout-icon { font-size: 2rem; margin-bottom: 12px; }
 
-/* Cartes services (fond propre — le style « croquis » se fera avec de vraies images) */
-.service-card { position: relative; }
+/* Cartes services : croquis en fond (à droite), texte à gauche sur voile sombre */
+.service-card {
+  position: relative; overflow: hidden; padding: 0;
+  aspect-ratio: 5 / 3; background: #050507; border-color: #23262c;
+}
+.service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.service-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg,
+    rgba(5,5,7,.94) 0%, rgba(5,5,7,.82) 34%, rgba(5,5,7,.35) 60%, rgba(5,5,7,0) 82%);
+}
+.service-text {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 24px 26px; max-width: 66%;
+}
+.service-text h3 { font-size: 1.2rem; margin: 0 0 8px; color: #fff; }
+.service-text p { margin: 0; color: #cfd3d8; font-size: .92rem; line-height: 1.5; }
+.service-card:hover .service-img { transform: scale(1.04); transition: transform .4s ease; }
+.service-img { transition: transform .4s ease; }
 .service-card h3, .atout h3 { font-size: 1.15rem; margin: 0 0 8px; }
 .service-card p, .atout p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
 
