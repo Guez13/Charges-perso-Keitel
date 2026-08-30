@@ -66,6 +66,52 @@
 <a href="#accueil" class="skip-link">Aller au contenu</a>
 
 <!-- ================================================================
+     PICTOGRAMMES MÉTIERS (définis une fois, réutilisés via <use>)
+     Style ligne. Servent d'icône + de filigrane de fond des cartes.
+     ================================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="ico-peinture" viewBox="0 0 24 24">
+      <rect x="3" y="4.5" width="10.5" height="4.5" rx="1"/>
+      <path d="M13.5 6.75H18a1 1 0 0 1 1 1V10a1 1 0 0 1-1 1h-6.5"/>
+      <path d="M10.5 11v2.4H9V21"/>
+    </symbol>
+    <symbol id="ico-cuisines" viewBox="0 0 24 24">
+      <rect x="3.5" y="5" width="17" height="14" rx="1.5"/>
+      <circle cx="8.5" cy="10" r="2"/><circle cx="15.5" cy="10" r="2"/>
+      <path d="M6 15h12"/>
+    </symbol>
+    <symbol id="ico-carrelage" viewBox="0 0 24 24">
+      <rect x="4" y="4" width="16" height="16" rx="1"/>
+      <path d="M4 12h16M12 4v16"/>
+    </symbol>
+    <symbol id="ico-placo" viewBox="0 0 24 24">
+      <path d="M4 4l9 3-6 6-3-9z"/>
+      <path d="M12.5 12.5l4.6 4.6a1.4 1.4 0 0 1-2 2L6 15"/>
+    </symbol>
+    <symbol id="ico-terrasses" viewBox="0 0 24 24">
+      <path d="M3 14h18M3 17.5h18M3 21h18"/>
+      <circle cx="17.5" cy="6.5" r="2.6"/>
+      <path d="M17.5 1.6v1.4M17.5 10v1.4M12.6 6.5h1.4M21 6.5h1.4"/>
+    </symbol>
+    <symbol id="ico-clotures" viewBox="0 0 24 24">
+      <path d="M6.5 21V8l2-2 2 2v13M13.5 21V8l2-2 2 2v13"/>
+      <path d="M3 11h18M3 15.5h18"/>
+    </symbol>
+    <symbol id="ico-sdb" viewBox="0 0 24 24">
+      <path d="M4 12h16v2.5a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 14.5V12z"/>
+      <path d="M6.5 12V7.5A2 2 0 0 1 8.5 5.5a2 2 0 0 1 2 1.8"/>
+      <path d="M7 18l-1 2M17 18l1 2"/>
+    </symbol>
+    <symbol id="ico-dalles" viewBox="0 0 24 24">
+      <rect x="3" y="7.5" width="18" height="4" rx="0.6"/>
+      <path d="M6 11.5v4.5M12 11.5v4.5M18 11.5v4.5"/>
+      <path d="M4.5 16h3M10.5 16h3M16.5 16h3"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ================================================================
      1. HEADER FIXE
      ================================================================ -->
 <header class="site-header" id="site-header">
@@ -160,49 +206,57 @@
       <div class="cards-grid services-grid">
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-peinture"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-peinture"/></svg>
           <h3>Peinture</h3>
           <p>Peinture intérieure et extérieure, préparation des supports et finitions soignées.</p>
         </article>
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-cuisines"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-cuisines"/></svg>
           <h3>Cuisines</h3>
           <p>Pose et rénovation de cuisines clé en main, du plan de travail aux raccords.</p>
         </article>
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-carrelage"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-carrelage"/></svg>
           <h3>Carrelage</h3>
           <p>Carrelage sol et mur, faïence et grands formats, pose droite ou décalée.</p>
         </article>
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-placo"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-placo"/></svg>
           <h3>Placo</h3>
           <p>Cloisons, doublages, plafonds et isolation en plaques de plâtre.</p>
         </article>
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-terrasses"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-terrasses"/></svg>
           <h3>Terrasses</h3>
           <p>Création de terrasses bois, composite ou béton pour profiter de vos extérieurs.</p>
         </article>
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-clotures"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-clotures"/></svg>
           <h3>Clôtures</h3>
           <p>Clôtures, portails et murets pour délimiter et sécuriser votre terrain.</p>
         </article>
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-sdb"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-sdb"/></svg>
           <h3>Salles de bain</h3>
           <p>Rénovation complète de salles de bain : plomberie, carrelage, meubles et douche.</p>
         </article>
 
         <article class="card service-card">
-          <img class="service-mark" src="images/logo/keitel-logoB.png" alt="" width="34" height="34">
+          <svg class="service-bg" aria-hidden="true"><use href="#ico-dalles"/></svg>
+          <svg class="service-ico" aria-hidden="true"><use href="#ico-dalles"/></svg>
           <h3>Dalles sur plots</h3>
           <p>Pose de dalles sur plots pour des terrasses planes, propres et durables.</p>
         </article>
