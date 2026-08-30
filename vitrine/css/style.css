@@ -229,9 +229,9 @@ ul { margin: 0; padding: 0; }
 .portfolio-item {
   position: relative; padding: 0; border: none; cursor: pointer;
   border-radius: var(--radius); overflow: hidden; background: var(--line);
-  flex: 0 0 340px;           /* largeur fixe de chaque vignette */
-  max-width: 78vw;           /* jamais plus large que l'écran sur mobile */
-  aspect-ratio: 4 / 3;
+  flex: 0 0 320px;           /* largeur fixe de chaque vignette */
+  max-width: 82vw;           /* jamais plus large que l'écran sur mobile */
+  aspect-ratio: 3 / 4;       /* portrait (photos verticales) */
   scroll-snap-align: start;
 }
 .portfolio-item img {
