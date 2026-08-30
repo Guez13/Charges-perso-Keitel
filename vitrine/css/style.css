@@ -128,11 +128,9 @@ ul { margin: 0; padding: 0; }
   display: flex; align-items: center; gap: 16px;
 }
 
-.logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.3rem; }
+.logo { display: flex; align-items: center; color: #fff; }
 .logo:hover { text-decoration: none; }
-.logo-mark { width: 36px; height: 36px; display: block; }
-.logo-text { letter-spacing: .5px; color: #fff; }   /* « eitel » en blanc */
-.logo-k { color: var(--accent); }                    /* « K » en rouge */
+.logo-img { height: 38px; width: auto; display: block; }
 
 .main-nav { margin-left: auto; }
 .main-nav ul { display: flex; gap: 22px; list-style: none; }
@@ -321,9 +319,7 @@ ul { margin: 0; padding: 0; }
    ================================================================ */
 .site-footer { background: var(--bg-dark); color: #c8cdd2; padding-top: 44px; }
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; padding-bottom: 30px; }
-.footer-brand-row { display: flex; align-items: center; gap: 10px; }
-.footer-brand .logo-mark { width: 32px; height: 32px; }
-.footer-brand .logo-text { color: #fff; font-weight: 800; font-size: 1.2rem; }
+.footer-logo { height: 34px; }
 .footer-brand p { margin: 10px 0 0; font-size: .9rem; max-width: 34ch; }
 .footer-nav { display: flex; flex-direction: column; gap: 8px; }
 .footer-nav a, .footer-social a { color: #c8cdd2; }
