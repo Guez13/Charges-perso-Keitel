@@ -165,7 +165,8 @@ ul { margin: 0; padding: 0; }
 .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,24,28,.86) 0%, rgba(20,24,28,.55) 60%, rgba(20,24,28,.35) 100%); }
 .hero-content { position: relative; z-index: 1; padding-top: 40px; padding-bottom: 40px; }
 .hero-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; font-weight: 700; color: var(--accent-light); margin: 0 0 10px; }
-.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 16px; max-width: 16ch; color: #fff; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 10px; max-width: 16ch; color: #fff; }
+.hero-slogan { font-style: italic; color: var(--accent-light); font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 600; margin: 0 0 16px; }
 .hero-lead { font-size: clamp(1rem, 2vw, 1.2rem); max-width: 52ch; margin: 0 0 26px; color: #eef0f2; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
 .hero-badges { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; font-size: .9rem; color: #dfe3e6; }
@@ -191,6 +192,7 @@ ul { margin: 0; padding: 0; }
 }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .service-icon, .atout-icon { font-size: 2rem; margin-bottom: 12px; }
+.service-mark { width: 34px; height: 34px; display: block; margin-bottom: 14px; }
 .service-card h3, .atout h3 { font-size: 1.15rem; margin: 0 0 8px; }
 .service-card p, .atout p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
 
