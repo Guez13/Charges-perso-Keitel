@@ -140,6 +140,9 @@ ul { margin: 0; padding: 0; }
 .header-actions { display: flex; align-items: center; gap: 14px; }
 .header-phone { display: flex; align-items: center; gap: 6px; color: #fff; font-weight: 700; white-space: nowrap; }
 .header-phone:hover { color: var(--accent-light); text-decoration: none; }
+.header-ig { display: inline-flex; align-items: center; color: #fff; }
+.header-ig svg { width: 24px; height: 24px; fill: currentColor; }
+.header-ig:hover { color: var(--accent-light); }
 
 /* Bouton hamburger (masqué sur desktop) */
 .nav-toggle {
