@@ -54,17 +54,13 @@ body {
   font-family: var(--font);
   color: var(--ink);
   background-color: var(--bg);
-  /* Fond « matière » : mur en pierre au trait (esquisse) posé en très
-     léger sur les halos chauds calcaire/terracotta/olive. Le calque de
-     pierre est en multiply : son blanc disparaît, seul le trait reste. */
   background-image:
-    url("../images/textures/pierre-bg.jpg"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.20'/%3E%3C/svg%3E"),
     radial-gradient(1200px 720px at 12% -8%, rgba(195,154,63,.18), transparent 60%),
     radial-gradient(1100px 700px at 102% 6%, rgba(178,90,54,.12), transparent 55%),
     radial-gradient(1000px 900px at 50% 118%, rgba(111,125,63,.08), transparent 60%);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat;
-  background-size: 480px auto, auto, auto, auto;
-  background-blend-mode: multiply, normal, normal, normal;
+  background-size: 120px 120px, auto, auto, auto;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -206,17 +202,8 @@ ul { margin: 0; padding: 0; }
 /* ================================================================
    SECTIONS génériques
    ================================================================ */
-.section { padding: 72px 0; position: relative; }
-/* Sections alternées : panneau « travertin » (dallage au trait) qui
-   couvre le mur de pierre du fond global -> alternance de deux matières. */
-.section-alt {
-  background-color: rgba(232,218,188,.82);
-  background-image: url("../images/textures/travertin-bg.jpg");
-  background-size: 520px auto;
-  background-blend-mode: multiply;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
+.section { padding: 72px 0; }
+.section-alt { background: rgba(224,208,174,.42); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
 .section-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .78rem; font-weight: 700; color: var(--accent); margin: 0 0 8px; }
 .section-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.3rem); margin: 0 0 12px; position: relative; }
@@ -226,19 +213,6 @@ ul { margin: 0; padding: 0; }
 }
 .section-sub { color: var(--ink-soft); margin: 0; }
 .section-cta { text-align: center; margin-top: 36px; }
-
-/* Filigrane « mas provençal » (esquisse) derrière la section Pourquoi nous.
-   Posé en très léger, ancré en bas à droite ; le contenu passe au-dessus. */
-/* Voile calcaire qui estompe le mur de pierre du fond global, pour que
-   le filigrane du mas ressorte seul dans cette section. */
-#atouts { overflow: hidden; background-color: rgba(244,238,218,.88); }
-#atouts::after {
-  content: ""; position: absolute; right: -3%; bottom: 0;
-  width: min(820px, 70%); aspect-ratio: 1400 / 960;
-  background: url("../images/textures/maison-bg.jpg") no-repeat right bottom / contain;
-  mix-blend-mode: multiply; opacity: .16; pointer-events: none; z-index: 0;
-}
-#atouts > .container { position: relative; z-index: 1; }
 
 /* ---------- Grilles de cartes ---------- */
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
