@@ -233,6 +233,22 @@ ul { margin: 0; padding: 0; }
 .service-card p, .atout p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
 
 .atout { text-align: center; padding: 8px; }
+.atout-badge {
+  width: 70px; height: 70px; margin: 0 auto 18px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); background: rgba(255,255,255,.03);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.atout-ico {
+  width: 32px; height: 32px; color: var(--accent);
+  fill: none; stroke: currentColor; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.atout:hover .atout-badge {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255,31,31,.10);
+  transform: translateY(-3px);
+}
 
 /* ================================================================
    PORTFOLIO — CARROUSEL HORIZONTAL
