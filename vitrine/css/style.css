@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Mulish:wght@400;500;600;700;800&display=swap");
 /* =================================================================
    KEITEL — Site vitrine
    style.css — Structure de base, prête à être habillée ensuite.
@@ -10,30 +11,37 @@
 
 /* ---------- Variables (à ajuster pour le design final) ---------- */
 :root {
-  /* Couleur d'accent : rouge vif */
-  --accent: #ff1f1f;
-  --accent-dark: #d10f0f;
-  --accent-light: #ff5c4d;
-  --accent-glow: rgba(255, 31, 31, .40);
+  /* Boutons : ROUGE conservé */
+  --red: #d81f1f;
+  --red-dark: #b31414;
+  --red-glow: rgba(216, 31, 31, .30);
 
-  /* Neutres — THÈME SOMBRE (fond noir) */
-  --ink: #f4f5f7;         /* texte principal (clair) */
-  --ink-soft: #9a9ea6;    /* texte secondaire */
-  --line: #24262c;        /* bordures / séparateurs */
-  --bg: #08080a;          /* fond principal (noir) */
-  --bg-alt: #101015;      /* fond sections alternées (un cran plus clair) */
-  --panel: #16161c;       /* fond des cartes / champs de formulaire */
-  --bg-dark: #000000;     /* header / footer (noir absolu) */
+  /* Accent Provence : VERT OLIVE */
+  --accent: #6f7d3f;
+  --accent-dark: #55632c;
+  --accent-light: #8f9e57;
+  --accent-glow: rgba(111, 125, 63, .28);
+  --ochre: #c39a3f;        /* jaune calcaire chaud (détails) */
+
+  /* Neutres — THÈME CLAIR « pierre calcaire » */
+  --ink: #2c2519;          /* brun foncé chaud (texte) */
+  --ink-soft: #6d6450;     /* texte secondaire */
+  --line: #ddd0b4;         /* bordures / séparateurs (pierre) */
+  --bg: #f4eeda;           /* fond principal : calcaire clair */
+  --bg-alt: #ece0c6;       /* sections alternées (plus chaud) */
+  --panel: #fbf6ea;        /* cartes / champs */
+  --bg-dark: #24261d;      /* header / footer : olive très foncé */
 
   /* Mise en page */
   --maxw: 1140px;
   --radius: 10px;
   --radius-lg: 16px;
-  --shadow: 0 6px 24px rgba(0,0,0,.45);
+  --shadow: 0 12px 34px rgba(70,55,25,.14);
   --header-h: 68px;
 
   /* Typographie (police système par défaut — à remplacer ensuite) */
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font: 'Mulish', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Marcellus', 'Cormorant Garamond', Georgia, serif;
 }
 
 /* ---------- Reset léger ---------- */
@@ -50,7 +58,7 @@ body {
 img { max-width: 100%; display: block; height: auto; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
-h1, h2, h3 { line-height: 1.2; color: var(--ink); }
+h1, h2, h3 { line-height: 1.2; color: var(--ink); font-family: var(--font-display); font-weight: 400; }
 ul { margin: 0; padding: 0; }
 
 /* ---------- Utilitaires ---------- */
@@ -91,23 +99,22 @@ ul { margin: 0; padding: 0; }
 .btn:hover::after { transform: translateX(120%); }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 55%, var(--accent-dark) 100%);
+  background: linear-gradient(135deg, #ef4a4a 0%, var(--red) 55%, var(--red-dark) 100%);
   color: #fff; border-color: transparent;
-  box-shadow: 0 8px 22px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.22);
+  box-shadow: 0 8px 22px var(--red-glow), inset 0 1px 0 rgba(255,255,255,.22);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px var(--accent-glow), 0 0 0 3px rgba(255,31,31,.18), inset 0 1px 0 rgba(255,255,255,.3);
-  filter: brightness(1.06); color: #fff;
+  box-shadow: 0 12px 30px var(--red-glow), 0 0 0 3px rgba(216,31,31,.16), inset 0 1px 0 rgba(255,255,255,.3);
+  filter: brightness(1.05); color: #fff;
 }
 .btn-ghost {
-  background: rgba(255,255,255,.04); color: #fff;
-  border-color: rgba(255,255,255,.28);
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,.015); color: var(--ink);
+  border-color: var(--line);
 }
 .btn-ghost:hover {
-  background: rgba(255,31,31,.12); border-color: var(--accent-light); color: #fff;
-  transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.35);
+  background: rgba(111,125,63,.12); border-color: var(--accent); color: var(--accent-dark);
+  transform: translateY(-2px); box-shadow: 0 8px 22px rgba(70,55,25,.14);
 }
 .btn-sm { padding: 10px 18px; font-size: .9rem; }
 .btn-lg { padding: 16px 34px; font-size: 1.05rem; }
@@ -118,7 +125,7 @@ ul { margin: 0; padding: 0; }
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   height: var(--header-h);
-  background: rgba(0,0,0,.55);              /* noir moderne, translucide */
+  background: rgba(36,38,29,.85);            /* olive foncé translucide */
   backdrop-filter: saturate(140%) blur(12px);
   -webkit-backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid rgba(255,255,255,.06);
@@ -159,7 +166,7 @@ ul { margin: 0; padding: 0; }
 /* ================================================================
    HERO
    ================================================================ */
-.hero { color: #fff; padding: calc(var(--header-h) + 48px) 0 60px; background: var(--bg); }
+.hero { color: var(--ink); padding: calc(var(--header-h) + 48px) 0 60px; background: var(--bg); }
 .hero-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 44px; align-items: center; }
 .hero-content { min-width: 0; }
 
@@ -176,12 +183,12 @@ ul { margin: 0; padding: 0; }
   opacity: 0; transition: opacity .7s ease;
 }
 .hero-slide.is-active { opacity: 1; }
-.hero-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; font-weight: 700; color: var(--accent-light); margin: 0 0 10px; }
-.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 10px; max-width: 16ch; color: #fff; }
-.hero-slogan { font-style: italic; color: var(--accent-light); font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 600; margin: 0 0 16px; }
-.hero-lead { font-size: clamp(1rem, 2vw, 1.2rem); max-width: 52ch; margin: 0 0 26px; color: #eef0f2; }
+.hero-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; font-weight: 700; color: var(--accent); margin: 0 0 10px; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 10px; max-width: 16ch; color: var(--ink); }
+.hero-slogan { font-style: italic; color: var(--accent-dark); font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 600; margin: 0 0 16px; }
+.hero-lead { font-size: clamp(1rem, 2vw, 1.2rem); max-width: 52ch; margin: 0 0 26px; color: var(--ink-soft); }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
-.hero-badges { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; font-size: .9rem; color: #dfe3e6; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; font-size: .9rem; color: var(--ink-soft); }
 
 /* ================================================================
    SECTIONS génériques
@@ -212,7 +219,7 @@ ul { margin: 0; padding: 0; }
 /* Cartes services : croquis en fond (à droite), texte à gauche sur voile sombre */
 .service-card {
   position: relative; overflow: hidden; padding: 0;
-  aspect-ratio: 5 / 3; background: #050507; border-color: #23262c;
+  aspect-ratio: 5 / 3; background: #14130e; border-color: var(--line); box-shadow: var(--shadow);
 }
 .service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .service-scrim {
@@ -236,7 +243,7 @@ ul { margin: 0; padding: 0; }
 .atout-badge {
   width: 70px; height: 70px; margin: 0 auto 18px;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--line); background: rgba(255,255,255,.03);
+  border: 1px solid var(--line); background: var(--panel);
   transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .atout-ico {
@@ -246,7 +253,7 @@ ul { margin: 0; padding: 0; }
 }
 .atout:hover .atout-badge {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(255,31,31,.10);
+  box-shadow: 0 0 0 4px rgba(111,125,63,.12);
   transform: translateY(-3px);
 }
 
@@ -373,7 +380,7 @@ ul { margin: 0; padding: 0; }
   width: 100%; padding: 12px 14px; font-size: 1rem; font-family: inherit;
   border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); color: var(--ink);
 }
-.form-group input::placeholder, .form-group textarea::placeholder { color: #6b7580; }
+.form-group input::placeholder, .form-group textarea::placeholder { color: #a99f86; }
 .form-group select option { background: var(--panel); color: var(--ink); }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
 .form-group textarea { resize: vertical; }
@@ -385,7 +392,7 @@ ul { margin: 0; padding: 0; }
 /* Champ invalide (ajouté par le JS) */
 .form-group.has-error input,
 .form-group.has-error select,
-.form-group.has-error textarea { border-color: var(--accent); background: #2a1a19; }
+.form-group.has-error textarea { border-color: var(--red); background: #f8e9e3; }
 
 /* Honeypot : totalement masqué à l'écran et aux lecteurs d'écran */
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -399,14 +406,14 @@ ul { margin: 0; padding: 0; }
 
 .form-feedback { margin-top: 20px; padding: 0; border-radius: var(--radius); text-align: center; font-weight: 600; }
 .form-feedback.show { padding: 16px 18px; }
-.form-feedback.success { background: #12261a; color: #52d489; border: 1px solid #1f5738; }
-.form-feedback.error { background: #2a1614; color: #f18b7f; border: 1px solid #6b2b23; }
+.form-feedback.success { background: #eaf1dc; color: #4d5f24; border: 1px solid #cdd9a8; }
+.form-feedback.error { background: #f8e6e1; color: #a2402e; border: 1px solid #e6c3b8; }
 
 /* ================================================================
    CONTACT
    ================================================================ */
 .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
-.contact-block h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin: 0 0 8px; }
+.contact-block h3 { font-family: var(--font); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin: 0 0 8px; }
 .contact-block p { margin: 0 0 4px; font-size: 1.1rem; }
 .contact-block a { color: var(--ink); font-weight: 700; }
 .contact-note { color: var(--ink-soft); font-size: .85rem !important; }
