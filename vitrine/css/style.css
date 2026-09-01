@@ -266,13 +266,15 @@ ul { margin: 0; padding: 0; }
 /* Cartes services : croquis en fond (à droite), texte à gauche sur voile sombre */
 .service-card {
   position: relative; overflow: hidden; padding: 0;
-  aspect-ratio: 5 / 3; background: #14130e; border-color: var(--line); box-shadow: var(--shadow);
+  aspect-ratio: 5 / 3; background: var(--terracotta); border-color: var(--line); box-shadow: var(--shadow);
 }
-.service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* TEST fond terracotta : le croquis sombre est fusionné en 'screen'
+   -> son fond noir devient terracotta, seuls les traits clairs ressortent. */
+.service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; }
 .service-scrim {
   position: absolute; inset: 0;
   background: linear-gradient(90deg,
-    rgba(5,5,7,.94) 0%, rgba(5,5,7,.82) 34%, rgba(5,5,7,.35) 60%, rgba(5,5,7,0) 82%);
+    rgba(90,40,22,.96) 0%, rgba(90,40,22,.85) 38%, rgba(90,40,22,.40) 62%, rgba(90,40,22,0) 84%);
 }
 .service-text {
   position: absolute; inset: 0; z-index: 1;
@@ -280,7 +282,7 @@ ul { margin: 0; padding: 0; }
   padding: 24px 26px; max-width: 66%;
 }
 .service-text h3 { font-size: 1.2rem; margin: 0 0 8px; color: #fff; }
-.service-text p { margin: 0; color: #cfd3d8; font-size: .92rem; line-height: 1.5; }
+.service-text p { margin: 0; color: #f6e7de; font-size: .92rem; line-height: 1.5; }
 .service-card:hover .service-img { transform: scale(1.04); transition: transform .4s ease; }
 .service-img { transition: transform .4s ease; }
 .service-card h3, .atout h3 { font-size: 1.15rem; margin: 0 0 8px; }
