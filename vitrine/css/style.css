@@ -175,13 +175,7 @@ ul { margin: 0; padding: 0; }
 /* ================================================================
    HERO
    ================================================================ */
-.hero {
-  color: var(--ink); padding: calc(var(--header-h) + 48px) 0 60px;
-  background-color: var(--bg);
-  background-image: url("../images/textures/bois.png");
-  background-size: 1300px auto; background-repeat: repeat;
-  background-blend-mode: multiply;
-}
+.hero { color: var(--ink); padding: calc(var(--header-h) + 48px) 0 60px; background: transparent; position: relative; }
 .hero-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 44px; align-items: center; }
 .hero-content { min-width: 0; }
 
@@ -210,33 +204,39 @@ ul { margin: 0; padding: 0; }
    ================================================================ */
 .section { padding: 72px 0; position: relative; }
 
-/* ================================================================
-   MATIÈRES par section (esquisses au trait claires, en multiply :
-   le blanc de la texture disparaît, seul le trait reste — discret).
-   ================================================================ */
-/* Sections alternées : dallage travertin */
 .section-alt {
   background-color: rgba(224,208,174,.42);
-  background-image: url("../images/textures/travertin.png");
-  background-size: 1200px auto; background-repeat: repeat;
-  background-blend-mode: multiply;
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
 }
-/* Prestations : mur en pierre */
-#services {
-  background-color: var(--bg);
-  background-image: url("../images/textures/pierre.png");
-  background-size: 1300px auto; background-repeat: repeat;
-  background-blend-mode: multiply;
-}
-/* Pourquoi nous : mas provençal en filigrane, sur TOUTE la section */
-#atouts { overflow: hidden; }
-#atouts::after {
+
+/* ================================================================
+   TEXTURES DE FOND — alternance MATIÈRE / ESQUISSE, une par section.
+   - Matières (pierre, travertin, bois) : trait clair tuilé, en multiply.
+   - Esquisses (croquis d'archi) : posées en filigrane plein cadre.
+   Dans les deux cas le blanc de l'image disparaît (multiply), seul le
+   trait subsiste : discret et lisible.
+   ================================================================ */
+
+/* --- MATIÈRES (tuilées) --- */
+#services, #atouts, #devis { background-color: var(--bg); background-repeat: repeat; background-blend-mode: multiply; }
+#services { background-image: url("../images/textures/pierre.png");    background-size: 1300px auto; }   /* Prestations */
+#atouts   { background-image: url("../images/textures/travertin.png"); background-size: 1200px auto; }   /* Pourquoi nous */
+#devis    { background-image: url("../images/textures/Bois.png");      background-size: 1300px auto; }   /* Devis */
+
+/* --- ESQUISSES (filigrane plein cadre) --- */
+.hero, #realisations, #zone, #contact { overflow: hidden; }
+.hero::after, #realisations::after, #zone::after, #contact::after {
   content: ""; position: absolute; inset: 0;
-  background: url("../images/textures/maison-bg.jpg") no-repeat center / cover;
-  mix-blend-mode: multiply; opacity: .42; pointer-events: none; z-index: 0;
+  background-repeat: no-repeat; background-position: center; background-size: cover;
+  mix-blend-mode: multiply; opacity: .4; pointer-events: none; z-index: 0;
 }
-#atouts > .container { position: relative; z-index: 1; }
+.hero::after         { background-image: url("../images/textures/esquisse2-bg.jpg"); }  /* Hero : terrasse */
+#realisations::after { background-image: url("../images/textures/esquisse3-bg.jpg"); }  /* Réalisations : villa + oliviers */
+#zone::after         { background-image: url("../images/textures/esquisse4-bg.jpg"); opacity: .5; }  /* Zone : plan de masse */
+#contact::after      { background-image: url("../images/textures/maison-bg.jpg"); }     /* Contact : mas */
+
+/* Le contenu passe au-dessus du filigrane */
+.hero > .container, #realisations > .container, #zone > .container, #contact > .container { position: relative; z-index: 1; }
 
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
 .section-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .78rem; font-weight: 700; color: var(--accent); margin: 0 0 8px; }
