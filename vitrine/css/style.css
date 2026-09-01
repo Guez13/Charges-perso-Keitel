@@ -175,7 +175,13 @@ ul { margin: 0; padding: 0; }
 /* ================================================================
    HERO
    ================================================================ */
-.hero { color: var(--ink); padding: calc(var(--header-h) + 48px) 0 60px; background: transparent; }
+.hero {
+  color: var(--ink); padding: calc(var(--header-h) + 48px) 0 60px;
+  background-color: var(--bg);
+  background-image: url("../images/textures/bois.png");
+  background-size: 1300px auto; background-repeat: repeat;
+  background-blend-mode: multiply;
+}
 .hero-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 44px; align-items: center; }
 .hero-content { min-width: 0; }
 
@@ -223,20 +229,12 @@ ul { margin: 0; padding: 0; }
   background-size: 1300px auto; background-repeat: repeat;
   background-blend-mode: multiply;
 }
-/* Devis : bois */
-#devis {
-  background-color: var(--bg);
-  background-image: url("../images/textures/bois.png");
-  background-size: 1300px auto; background-repeat: repeat;
-  background-blend-mode: multiply;
-}
-/* Pourquoi nous : mas provençal en filigrane */
+/* Pourquoi nous : mas provençal en filigrane, sur TOUTE la section */
 #atouts { overflow: hidden; }
 #atouts::after {
-  content: ""; position: absolute; right: -2%; bottom: 0;
-  width: min(820px, 66%); aspect-ratio: 1500 / 640;
-  background: url("../images/textures/maison-bg.jpg") no-repeat right bottom / contain;
-  mix-blend-mode: multiply; opacity: .5; pointer-events: none; z-index: 0;
+  content: ""; position: absolute; inset: 0;
+  background: url("../images/textures/maison-bg.jpg") no-repeat center / cover;
+  mix-blend-mode: multiply; opacity: .42; pointer-events: none; z-index: 0;
 }
 #atouts > .container { position: relative; z-index: 1; }
 
