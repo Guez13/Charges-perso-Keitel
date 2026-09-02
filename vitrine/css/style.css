@@ -239,6 +239,22 @@ ul { margin: 0; padding: 0; }
 /* Le contenu passe au-dessus du filigrane */
 .hero > .container, #realisations > .container, #zone > .container, #contact > .container { position: relative; z-index: 1; }
 
+/* --- Réglage MOBILE des textures ---
+   Sur petit écran, un motif prévu pour le desktop se retrouve énormément
+   zoomé (un seul gros fragment). On réduit la taille des tuiles (matières)
+   et on affiche les esquisses en 'contain' + plus discrètes, pour qu'elles
+   restent lisibles et fines. */
+@media (max-width: 760px) {
+  #services { background-size: 560px auto; }
+  #atouts   { background-size: 520px auto; }
+  #devis    { background-size: 560px auto; }
+  .hero::after, #realisations::after, #zone::after, #contact::after {
+    background-size: contain; background-position: center;
+    opacity: .18;
+  }
+  #zone::after { opacity: .22; }
+}
+
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
 .section-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .78rem; font-weight: 700; color: var(--accent); margin: 0 0 8px; }
 .section-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.3rem); margin: 0 0 12px; position: relative; }
