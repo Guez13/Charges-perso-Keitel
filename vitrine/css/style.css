@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Mulish:wght@400;500;600;700;800&display=swap");
 /* =================================================================
    KEITEL — Site vitrine
    style.css — Structure de base, prête à être habillée ensuite.
@@ -11,39 +10,30 @@
 
 /* ---------- Variables (à ajuster pour le design final) ---------- */
 :root {
-  /* Boutons : ROUGE conservé */
-  --red: #d81f1f;
-  --red-dark: #b31414;
-  --red-glow: rgba(216, 31, 31, .30);
+  /* Couleur d'accent : rouge vif */
+  --accent: #ff1f1f;
+  --accent-dark: #d10f0f;
+  --accent-light: #ff5c4d;
+  --accent-glow: rgba(255, 31, 31, .40);
 
-  /* Accent Provence : VERT OLIVE */
-  --accent: #6f7d3f;
-  --accent-dark: #55632c;
-  --accent-light: #8f9e57;
-  --accent-glow: rgba(111, 125, 63, .28);
-  --ochre: #c39a3f;        /* jaune calcaire chaud */
-  --terracotta: #b25a36;   /* terre / terracotta (touches) */
-  --terracotta-dark: #8f4527;
-
-  /* Neutres — THÈME CLAIR « pierre calcaire » */
-  --ink: #2c2519;          /* brun foncé chaud (texte) */
-  --ink-soft: #6d6450;     /* texte secondaire */
-  --line: #ddd0b4;         /* bordures / séparateurs (pierre) */
-  --bg: #f4eeda;           /* fond principal : calcaire clair */
-  --bg-alt: #ece0c6;       /* sections alternées (plus chaud) */
-  --panel: #fbf6ea;        /* cartes / champs */
-  --bg-dark: #24261d;      /* header / footer : olive très foncé */
+  /* Neutres — THÈME SOMBRE (fond noir) */
+  --ink: #f4f5f7;         /* texte principal (clair) */
+  --ink-soft: #9a9ea6;    /* texte secondaire */
+  --line: #24262c;        /* bordures / séparateurs */
+  --bg: #08080a;          /* fond principal (noir) */
+  --bg-alt: #101015;      /* fond sections alternées (un cran plus clair) */
+  --panel: #16161c;       /* fond des cartes / champs de formulaire */
+  --bg-dark: #000000;     /* header / footer (noir absolu) */
 
   /* Mise en page */
   --maxw: 1140px;
   --radius: 10px;
   --radius-lg: 16px;
-  --shadow: 0 12px 34px rgba(70,55,25,.14);
+  --shadow: 0 6px 24px rgba(0,0,0,.45);
   --header-h: 68px;
 
   /* Typographie (police système par défaut — à remplacer ensuite) */
-  --font: 'Mulish', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: 'Marcellus', 'Cormorant Garamond', Georgia, serif;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* ---------- Reset léger ---------- */
@@ -53,21 +43,14 @@ body {
   margin: 0;
   font-family: var(--font);
   color: var(--ink);
-  background-color: var(--bg);
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.20'/%3E%3C/svg%3E"),
-    radial-gradient(1200px 720px at 12% -8%, rgba(195,154,63,.18), transparent 60%),
-    radial-gradient(1100px 700px at 102% 6%, rgba(178,90,54,.12), transparent 55%),
-    radial-gradient(1000px 900px at 50% 118%, rgba(111,125,63,.08), transparent 60%);
-  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
-  background-size: 120px 120px, auto, auto, auto;
+  background: var(--bg);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 img { max-width: 100%; display: block; height: auto; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
-h1, h2, h3 { line-height: 1.2; color: var(--ink); font-family: var(--font-display); font-weight: 400; }
+h1, h2, h3 { line-height: 1.2; color: var(--ink); }
 ul { margin: 0; padding: 0; }
 
 /* ---------- Utilitaires ---------- */
@@ -108,22 +91,23 @@ ul { margin: 0; padding: 0; }
 .btn:hover::after { transform: translateX(120%); }
 
 .btn-primary {
-  background: linear-gradient(135deg, #ef4a4a 0%, var(--red) 55%, var(--red-dark) 100%);
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 55%, var(--accent-dark) 100%);
   color: #fff; border-color: transparent;
-  box-shadow: 0 8px 22px var(--red-glow), inset 0 1px 0 rgba(255,255,255,.22);
+  box-shadow: 0 8px 22px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.22);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px var(--red-glow), 0 0 0 3px rgba(216,31,31,.16), inset 0 1px 0 rgba(255,255,255,.3);
-  filter: brightness(1.05); color: #fff;
+  box-shadow: 0 12px 30px var(--accent-glow), 0 0 0 3px rgba(255,31,31,.18), inset 0 1px 0 rgba(255,255,255,.3);
+  filter: brightness(1.06); color: #fff;
 }
 .btn-ghost {
-  background: rgba(0,0,0,.015); color: var(--ink);
-  border-color: var(--line);
+  background: rgba(255,255,255,.04); color: #fff;
+  border-color: rgba(255,255,255,.28);
+  backdrop-filter: blur(4px);
 }
 .btn-ghost:hover {
-  background: rgba(111,125,63,.12); border-color: var(--accent); color: var(--accent-dark);
-  transform: translateY(-2px); box-shadow: 0 8px 22px rgba(70,55,25,.14);
+  background: rgba(255,31,31,.12); border-color: var(--accent-light); color: #fff;
+  transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.35);
 }
 .btn-sm { padding: 10px 18px; font-size: .9rem; }
 .btn-lg { padding: 16px 34px; font-size: 1.05rem; }
@@ -134,11 +118,10 @@ ul { margin: 0; padding: 0; }
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   height: var(--header-h);
-  /* Dégradé vers l'olive (rappel du thème / de la version sombre) */
-  background: linear-gradient(100deg, rgba(33,36,24,.90) 0%, rgba(74,84,45,.80) 100%);
+  background: rgba(0,0,0,.55);              /* noir moderne, translucide */
   backdrop-filter: saturate(140%) blur(12px);
   -webkit-backdrop-filter: saturate(140%) blur(12px);
-  border-bottom: 1px solid rgba(195,154,63,.28);
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 .header-inner {
   height: var(--header-h);
@@ -176,7 +159,7 @@ ul { margin: 0; padding: 0; }
 /* ================================================================
    HERO
    ================================================================ */
-.hero { color: var(--ink); padding: calc(var(--header-h) + 48px) 0 60px; background: transparent; position: relative; }
+.hero { color: #fff; padding: calc(var(--header-h) + 48px) 0 60px; background: var(--bg); }
 .hero-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 44px; align-items: center; }
 .hero-content { min-width: 0; }
 
@@ -193,75 +176,21 @@ ul { margin: 0; padding: 0; }
   opacity: 0; transition: opacity .7s ease;
 }
 .hero-slide.is-active { opacity: 1; }
-.hero-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; font-weight: 700; color: var(--accent); margin: 0 0 10px; }
-.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 10px; max-width: 16ch; color: var(--ink); }
-.hero-slogan { font-style: italic; color: var(--accent-dark); font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 600; margin: 0 0 16px; }
-.hero-lead { font-size: clamp(1rem, 2vw, 1.2rem); max-width: 52ch; margin: 0 0 26px; color: var(--ink-soft); }
+.hero-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .8rem; font-weight: 700; color: var(--accent-light); margin: 0 0 10px; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 10px; max-width: 16ch; color: #fff; }
+.hero-slogan { font-style: italic; color: var(--accent-light); font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 600; margin: 0 0 16px; }
+.hero-lead { font-size: clamp(1rem, 2vw, 1.2rem); max-width: 52ch; margin: 0 0 26px; color: #eef0f2; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
-.hero-badges { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; font-size: .9rem; color: var(--ink-soft); }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; font-size: .9rem; color: #dfe3e6; }
 
 /* ================================================================
    SECTIONS génériques
    ================================================================ */
-.section { padding: 72px 0; position: relative; }
-
-.section-alt {
-  background-color: rgba(224,208,174,.42);
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
-
-/* ================================================================
-   TEXTURES DE FOND — alternance MATIÈRE / ESQUISSE, une par section.
-   - Matières (pierre, travertin, bois) : trait clair tuilé, en multiply.
-   - Esquisses (croquis d'archi) : posées en filigrane plein cadre.
-   Dans les deux cas le blanc de l'image disparaît (multiply), seul le
-   trait subsiste : discret et lisible.
-   ================================================================ */
-
-/* --- MATIÈRES (tuilées) --- */
-#services, #atouts, #devis { background-color: var(--bg); background-repeat: repeat; background-blend-mode: multiply; }
-#services { background-image: url("../images/textures/pierre.png");    background-size: 1300px auto; }   /* Prestations */
-#atouts   { background-image: url("../images/textures/travertin.png"); background-size: 1200px auto; }   /* Pourquoi nous */
-#devis    { background-image: url("../images/textures/Bois.png");      background-size: 1300px auto; }   /* Devis */
-
-/* --- ESQUISSES (filigrane plein cadre) --- */
-.hero, #realisations, #zone, #contact { overflow: hidden; }
-.hero::after, #realisations::after, #zone::after, #contact::after {
-  content: ""; position: absolute; inset: 0;
-  background-repeat: no-repeat; background-position: center; background-size: cover;
-  mix-blend-mode: multiply; opacity: .4; pointer-events: none; z-index: 0;
-}
-.hero::after         { background-image: url("../images/textures/esquisse2-bg.jpg"); }  /* Hero : terrasse */
-#realisations::after { background-image: url("../images/textures/esquisse3-bg.jpg"); }  /* Réalisations : villa + oliviers */
-#zone::after         { background-image: url("../images/textures/esquisse4-bg.jpg"); opacity: .5; }  /* Zone : plan de masse */
-#contact::after      { background-image: url("../images/textures/maison-bg.jpg"); }     /* Contact : mas */
-
-/* Le contenu passe au-dessus du filigrane */
-.hero > .container, #realisations > .container, #zone > .container, #contact > .container { position: relative; z-index: 1; }
-
-/* --- Réglage MOBILE des textures ---
-   Sur petit écran, un motif prévu pour le desktop se retrouve énormément
-   zoomé (un seul gros fragment). On réduit la taille des tuiles (matières)
-   et on affiche les esquisses en 'contain' + plus discrètes, pour qu'elles
-   restent lisibles et fines. */
-@media (max-width: 760px) {
-  #services { background-size: 560px auto; }
-  #atouts   { background-size: 520px auto; }
-  #devis    { background-size: 560px auto; }
-  .hero::after, #realisations::after, #zone::after, #contact::after {
-    background-size: contain; background-position: center;
-    opacity: .18;
-  }
-  #zone::after { opacity: .22; }
-}
-
+.section { padding: 72px 0; }
+.section-alt { background: var(--bg-alt); }
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
 .section-eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: .78rem; font-weight: 700; color: var(--accent); margin: 0 0 8px; }
-.section-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.3rem); margin: 0 0 12px; position: relative; }
-.section-head h2::after {
-  content: ""; display: block; width: 62px; height: 3px; margin: 16px auto 0;
-  background: linear-gradient(90deg, var(--ochre), var(--terracotta)); border-radius: 3px;
-}
+.section-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.3rem); margin: 0 0 12px; }
 .section-sub { color: var(--ink-soft); margin: 0; }
 .section-cta { text-align: center; margin-top: 36px; }
 
@@ -283,15 +212,13 @@ ul { margin: 0; padding: 0; }
 /* Cartes services : croquis en fond (à droite), texte à gauche sur voile sombre */
 .service-card {
   position: relative; overflow: hidden; padding: 0;
-  aspect-ratio: 5 / 3; background: var(--accent); border-color: var(--line); box-shadow: var(--shadow);
+  aspect-ratio: 5 / 3; background: #050507; border-color: #23262c;
 }
-/* Fond olive : le croquis sombre est fusionné en 'screen'
-   -> son fond noir devient olive, seuls les traits clairs ressortent. */
-.service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; }
+.service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .service-scrim {
   position: absolute; inset: 0;
   background: linear-gradient(90deg,
-    rgba(38,44,24,.96) 0%, rgba(38,44,24,.85) 38%, rgba(38,44,24,.40) 62%, rgba(38,44,24,0) 84%);
+    rgba(5,5,7,.94) 0%, rgba(5,5,7,.82) 34%, rgba(5,5,7,.35) 60%, rgba(5,5,7,0) 82%);
 }
 .service-text {
   position: absolute; inset: 0; z-index: 1;
@@ -299,7 +226,7 @@ ul { margin: 0; padding: 0; }
   padding: 24px 26px; max-width: 66%;
 }
 .service-text h3 { font-size: 1.2rem; margin: 0 0 8px; color: #fff; }
-.service-text p { margin: 0; color: #f6e7de; font-size: .92rem; line-height: 1.5; }
+.service-text p { margin: 0; color: #cfd3d8; font-size: .92rem; line-height: 1.5; }
 .service-card:hover .service-img { transform: scale(1.04); transition: transform .4s ease; }
 .service-img { transition: transform .4s ease; }
 .service-card h3, .atout h3 { font-size: 1.15rem; margin: 0 0 8px; }
@@ -309,7 +236,7 @@ ul { margin: 0; padding: 0; }
 .atout-badge {
   width: 70px; height: 70px; margin: 0 auto 18px;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--line); background: var(--panel);
+  border: 1px solid var(--line); background: rgba(255,255,255,.03);
   transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .atout-ico {
@@ -319,7 +246,7 @@ ul { margin: 0; padding: 0; }
 }
 .atout:hover .atout-badge {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(111,125,63,.12);
+  box-shadow: 0 0 0 4px rgba(255,31,31,.10);
   transform: translateY(-3px);
 }
 
@@ -361,7 +288,7 @@ ul { margin: 0; padding: 0; }
 .portfolio-item:hover img { transform: scale(1.06); }
 .portfolio-tag {
   position: absolute; left: 10px; bottom: 10px;
-  background: var(--terracotta); color: #fff; font-size: .75rem; font-weight: 700;
+  background: var(--accent); color: #fff; font-size: .75rem; font-weight: 700;
   padding: 4px 10px; border-radius: 20px;
 }
 .portfolio-hint { text-align: center; color: var(--ink-soft); font-size: .85rem; margin-top: 6px; }
@@ -395,7 +322,7 @@ ul { margin: 0; padding: 0; }
 .ba-handle {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
   width: 40px; height: 40px; border-radius: 50%;
-  background: var(--terracotta); color: #fff;
+  background: var(--accent); color: #fff;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 2px 10px rgba(0,0,0,.5); font-size: 1rem;
 }
@@ -431,7 +358,7 @@ ul { margin: 0; padding: 0; }
   gap: 8px 20px; margin: 18px 0;
 }
 .zone-list li { position: relative; padding-left: 22px; }
-.zone-list li::before { content: ""; position: absolute; left: 0; top: .35em; width: 12px; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236f7d3f' d='M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E") no-repeat center/contain; }
+.zone-list li::before { content: "📍"; position: absolute; left: 0; }
 .zone-note { color: var(--ink-soft); font-size: .92rem; margin-bottom: 20px; }
 .zone-map iframe { width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
 
@@ -446,7 +373,7 @@ ul { margin: 0; padding: 0; }
   width: 100%; padding: 12px 14px; font-size: 1rem; font-family: inherit;
   border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); color: var(--ink);
 }
-.form-group input::placeholder, .form-group textarea::placeholder { color: #a99f86; }
+.form-group input::placeholder, .form-group textarea::placeholder { color: #6b7580; }
 .form-group select option { background: var(--panel); color: var(--ink); }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
 .form-group textarea { resize: vertical; }
@@ -458,7 +385,7 @@ ul { margin: 0; padding: 0; }
 /* Champ invalide (ajouté par le JS) */
 .form-group.has-error input,
 .form-group.has-error select,
-.form-group.has-error textarea { border-color: var(--red); background: #f8e9e3; }
+.form-group.has-error textarea { border-color: var(--accent); background: #2a1a19; }
 
 /* Honeypot : totalement masqué à l'écran et aux lecteurs d'écran */
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -472,14 +399,14 @@ ul { margin: 0; padding: 0; }
 
 .form-feedback { margin-top: 20px; padding: 0; border-radius: var(--radius); text-align: center; font-weight: 600; }
 .form-feedback.show { padding: 16px 18px; }
-.form-feedback.success { background: #eaf1dc; color: #4d5f24; border: 1px solid #cdd9a8; }
-.form-feedback.error { background: #f8e6e1; color: #a2402e; border: 1px solid #e6c3b8; }
+.form-feedback.success { background: #12261a; color: #52d489; border: 1px solid #1f5738; }
+.form-feedback.error { background: #2a1614; color: #f18b7f; border: 1px solid #6b2b23; }
 
 /* ================================================================
    CONTACT
    ================================================================ */
 .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
-.contact-block h3 { font-family: var(--font); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin: 0 0 8px; }
+.contact-block h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin: 0 0 8px; }
 .contact-block p { margin: 0 0 4px; font-size: 1.1rem; }
 .contact-block a { color: var(--ink); font-weight: 700; }
 .contact-note { color: var(--ink-soft); font-size: .85rem !important; }
@@ -487,7 +414,7 @@ ul { margin: 0; padding: 0; }
 /* ================================================================
    FOOTER
    ================================================================ */
-.site-footer { background: linear-gradient(160deg, #24261d 0%, #46512a 100%); color: #d6dac8; padding-top: 44px; }
+.site-footer { background: var(--bg-dark); color: #c8cdd2; padding-top: 44px; }
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; padding-bottom: 30px; }
 .footer-logo { height: 34px; }
 .footer-brand p { margin: 10px 0 0; font-size: .9rem; max-width: 34ch; }
