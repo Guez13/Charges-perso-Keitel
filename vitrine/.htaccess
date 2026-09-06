@@ -35,12 +35,9 @@
 # ---- Page d'accueil par défaut ----
 DirectoryIndex index.html index.php
 
-# ---- (Optionnel) Forcer HTTPS une fois le certificat SSL activé sur OVH ----
-# RewriteEngine On
-# RewriteCond %{HTTPS} off
-# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# ---- (Optionnel) Forcer le www ou le non-www — décommenter au choix ----
-# RewriteEngine On
-# RewriteCond %{HTTP_HOST} !^www\. [NC]
-# RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# ---- Forcer HTTPS + www (cohérent avec l'URL canonique du site) ----
+# Redirige http:// et keitel-renov.fr (sans www) vers https://www.keitel-renov.fr
+RewriteEngine On
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\.keitel-renov\.fr$ [NC]
+RewriteRule ^ https://www.keitel-renov.fr%{REQUEST_URI} [L,R=301]
