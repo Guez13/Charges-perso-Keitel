@@ -42,14 +42,14 @@ vitrine/
 Tout se passe dans **`php/config.php`** — c'est le seul fichier à modifier.
 
 ```php
-'to_email'   => 'contact@keitel-renov.com',   // ← où arrivent les demandes
-'from_email' => 'no-reply@keitel-renov.com',  // ← adresse OVH réelle (voir note)
+'to_email'   => 'contact@keitel-renov.fr',   // ← où arrivent les demandes
+'from_email' => 'no-reply@keitel-renov.fr',  // ← adresse OVH réelle (voir note)
 'method'     => 'smtp',                        // 'smtp' (recommandé) ou 'mail'
 'smtp' => [
     'host'       => 'ssl0.ovh.net',
     'port'       => 587,
     'encryption' => 'tls',
-    'username'   => 'no-reply@keitel-renov.com', // = une adresse email OVH
+    'username'   => 'no-reply@keitel-renov.fr', // = une adresse email OVH
     'password'   => 'VOTRE_MOT_DE_PASSE_EMAIL',  // mot de passe de cette adresse
 ],
 ```
@@ -57,7 +57,7 @@ Tout se passe dans **`php/config.php`** — c'est le seul fichier à modifier.
 > **Important (délivrabilité OVH)** : l'adresse `from_email` **doit être une
 > vraie boîte email créée sur votre domaine OVH**. Un envoi depuis une adresse
 > externe (gmail, etc.) sera bloqué ou classé en spam (SPF/DKIM). Créez par
-> exemple `no-reply@keitel-renov.com` dans votre espace client OVH, puis
+> exemple `no-reply@keitel-renov.fr` dans votre espace client OVH, puis
 > reportez ses identifiants ci-dessus.
 
 ### Où trouver les infos SMTP OVH
@@ -96,8 +96,8 @@ Voir **`php/PHPMailer/INSTALLER-PHPMailer.txt`** (résumé) :
    - `php/config.php` (email + SMTP)
    - Numéro de téléphone : rechercher `+33600000000` et `06 00 00 00 00` dans
      `index.html` et remplacer partout.
-   - Email affiché : `contact@keitel-renov.com`
-   - URL du site : `www.keitel-renov.com` (balises canonical, Open Graph, schema.org)
+   - Email affiché : `contact@keitel-renov.fr`
+   - URL du site : `www.keitel-renov.fr` (balises canonical, Open Graph, schema.org)
    - Mentions légales du footer (SIRET, assurance décennale)
    - Remplacer les images placeholders (voir `images/README-images.txt`)
 
