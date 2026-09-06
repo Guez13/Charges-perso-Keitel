@@ -15,7 +15,7 @@ return [
      * 1. DESTINATAIRE — où arrivent les demandes de devis
      * ----------------------------------------------------------- */
     // Adresse qui reçoit les demandes (celle que Keitel consulte)
-    'to_email'    => 'contact.keitel@gmail.com',
+    'to_email'    => 'contact@keitel-renov.fr',
     'to_name'     => 'Keitel',
 
     // Expéditeur affiché. Sur OVH, il DOIT s'agir d'une adresse
