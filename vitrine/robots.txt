@@ -1,0 +1,5 @@
+# Keitel — robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://www.keitel-renov.fr/sitemap.xml
