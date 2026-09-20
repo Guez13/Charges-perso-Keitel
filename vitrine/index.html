@@ -65,6 +65,18 @@
 
 <body>
 
+<!-- Filtre duotone (croquis des prestations : crème dans les creux, olive sur les traits) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="svc-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncR type="linear" slope="-0.549" intercept="0.984"/>
+      <feFuncG type="linear" slope="-0.475" intercept="0.965"/>
+      <feFuncB type="linear" slope="-0.671" intercept="0.918"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
 <!-- Lien d'évitement (accessibilité clavier) -->
 <a href="#accueil" class="skip-link">Aller au contenu</a>
 

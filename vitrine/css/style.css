@@ -285,21 +285,21 @@ ul { margin: 0; padding: 0; }
   position: relative; overflow: hidden; padding: 0;
   aspect-ratio: 5 / 3; background: var(--panel); border-color: var(--line); box-shadow: var(--shadow);
 }
-/* Fond clair : le croquis (rendu sombre) est inversé -> trait sombre sur
-   fond clair, puis fusionné en 'multiply' pour ne garder que le trait. */
-.service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: invert(1) grayscale(1); mix-blend-mode: multiply; }
+/* Fond crème + croquis OLIVE : filtre duotone (creux crème, traits olive)
+   -> effet miroir de l'ancienne carte (fond olive / traits crème). */
+.service-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: url(#svc-duotone); }
 .service-scrim {
   position: absolute; inset: 0;
   background: linear-gradient(90deg,
-    rgba(251,246,234,.96) 0%, rgba(251,246,234,.85) 38%, rgba(251,246,234,.42) 62%, rgba(251,246,234,0) 84%);
+    rgba(251,246,234,.94) 0%, rgba(251,246,234,.82) 38%, rgba(251,246,234,.40) 62%, rgba(251,246,234,0) 84%);
 }
 .service-text {
   position: absolute; inset: 0; z-index: 1;
   display: flex; flex-direction: column; justify-content: center;
   padding: 24px 26px; max-width: 66%;
 }
-.service-text h3 { font-size: 1.2rem; margin: 0 0 8px; color: var(--ink); }
-.service-text p { margin: 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.5; }
+.service-text h3 { font-size: 1.2rem; margin: 0 0 8px; color: var(--accent-dark); }
+.service-text p { margin: 0; color: var(--ink); font-size: .92rem; line-height: 1.5; }
 .service-card:hover .service-img { transform: scale(1.04); transition: transform .4s ease; }
 .service-img { transition: transform .4s ease; }
 .service-card h3, .atout h3 { font-size: 1.15rem; margin: 0 0 8px; }
