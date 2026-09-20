@@ -299,7 +299,7 @@ ul { margin: 0; padding: 0; }
   padding: 24px 26px; max-width: 66%;
 }
 .service-text h3 { font-size: 1.2rem; margin: 0 0 8px; color: var(--accent-dark); }
-.service-text p { margin: 0; color: var(--ink); font-size: .92rem; line-height: 1.5; }
+.service-text p { margin: 0; color: var(--accent-dark); font-size: .92rem; line-height: 1.5; }
 .service-card:hover .service-img { transform: scale(1.04); transition: transform .4s ease; }
 .service-img { transition: transform .4s ease; }
 .service-card h3, .atout h3 { font-size: 1.15rem; margin: 0 0 8px; }
