@@ -305,17 +305,27 @@ function pickUser(who){
 
 async function submitPin(){
   const pin = document.getElementById('pin-input').value.replace(/\D/g,'');
-  if(pin.length<4){ document.getElementById('pin-err').textContent='Minimum 4 chiffres'; return; }
-  const existing = getCfg(`pin_${pickingUser}`);
-  if(!existing){
+  const errEl = document.getElementById('pin-err');
+  if(pin.length<4){ errEl.style.color='#ef4444'; errEl.textContent='Minimum 4 chiffres'; return; }
+  let existing = getCfg(`pin_${pickingUser}`);
+  // Si les codes ne sont pas encore chargés, on attend la lecture (cache/serveur)
+  // AVANT de décider : ça évite de proposer de "créer" un code qui existe déjà.
+  if(existing==null){
+    errEl.style.color='#94a3b8'; errEl.textContent='Vérification…';
+    try { await dataReady; } catch(e){}
+    errEl.textContent=''; errEl.style.color='#ef4444';
+    existing = getCfg(`pin_${pickingUser}`);
+  }
+  if(existing!=null){
+    if(hashPin(pin)===String(existing)){ loginAs(pickingUser); }
+    else { errEl.style.color='#ef4444'; errEl.textContent='Code incorrect'; document.getElementById('pin-input').value=''; }
+  } else {
+    // Aucun code connu (toute première utilisation) : on le crée.
     const hashed = hashPin(pin);
     setCfg(`pin_${pickingUser}`, hashed);
     saveCache();
     await jsonp(`${API}?action=setpin&key=pin_${pickingUser}&value=${hashed}`);
     loginAs(pickingUser);
-  } else {
-    if(hashPin(pin)===String(existing)){ loginAs(pickingUser); }
-    else { document.getElementById('pin-err').textContent='Code incorrect'; document.getElementById('pin-input').value=''; }
   }
 }
 
@@ -649,7 +659,7 @@ async function init(){
   }
 }
 
-init();
+let dataReady = init();
 </script>
 </body>
 </html>
