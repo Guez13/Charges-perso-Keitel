@@ -175,6 +175,52 @@ let addPerson = 'julien';
 let fixedPerson = 'julien';
 let editFixedId = null;
 
+// ─── CACHE LOCAL (copie de secours) ───────────────────────
+const LS_KEY = 'keitel_charges_cache_v1';
+function saveCache(){
+  try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch(e){}
+}
+function loadCache(){
+  try {
+    const s = localStorage.getItem(LS_KEY);
+    if(!s) return false;
+    const d = JSON.parse(s);
+    DB.config = d.config||[];
+    DB.fixed = d.fixed||[];
+    DB.variable = d.variable||[];
+    return true;
+  } catch(e){ return false; }
+}
+function setStatus(state, msg){
+  let el = document.getElementById('sync-banner');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'sync-banner';
+    el.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:9999;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;box-shadow:0 4px 12px #0006;transition:opacity .4s;pointer-events:none;max-width:90%;text-align:center';
+    document.body.appendChild(el);
+  }
+  if(state==='ok'){ el.style.background='#15803d'; el.style.color='#fff'; el.textContent=msg||'✓ Synchronisé'; el.style.opacity='1'; clearTimeout(el._t); el._t=setTimeout(()=>{el.style.opacity='0';},2000); }
+  else if(state==='offline'){ clearTimeout(el._t); el.style.background='#b45309'; el.style.color='#fff'; el.textContent=msg||'⚠ Hors ligne — données locales'; el.style.opacity='1'; }
+  else if(state==='loading'){ clearTimeout(el._t); el.style.background='#334155'; el.style.color='#cbd5e1'; el.textContent=msg||'⏳ Chargement…'; el.style.opacity='1'; }
+  else if(state==='error'){ clearTimeout(el._t); el.style.background='#b91c1c'; el.style.color='#fff'; el.textContent=msg||'⛔ Impossible de charger les données'; el.style.opacity='1'; }
+}
+function refreshUI(){
+  if(document.getElementById('app').style.display!=='none'){
+    const active = document.querySelector('.page.active');
+    const page = active ? active.id.replace('page-','') : 'dash';
+    if(page==='dash') renderDash();
+    else if(page==='fixed') renderFixed();
+    else if(page==='annual') renderAnnual();
+    populateCatSelect('add-cat');
+  } else if(pickingUser && document.getElementById('login-pin').style.display!=='none'){
+    const existing = getCfg(`pin_${pickingUser}`);
+    document.getElementById('pin-label').textContent = existing
+      ? `Code PIN — ${pickingUser==='julien'?'Julien':'David'}`
+      : `Créer un code PIN pour ${pickingUser==='julien'?'Julien':'David'}`;
+    document.getElementById('pin-btn').textContent = existing ? 'Connexion' : 'Créer le code';
+  }
+}
+
 function fmt(n){ return Number(n).toFixed(2).replace('.',',')+' €'; }
 function uid(){ return Math.random().toString(36).slice(2,9); }
 function today(){ return new Date().toISOString().slice(0,10); }
@@ -203,10 +249,13 @@ function jsonp(url) {
 }
 
 async function apiRead() {
-  try {
-    const d = await jsonp(`${API}?action=read`);
-    return d;
-  } catch(e) { console.error('apiRead error',e); return null; }
+  for(let attempt=0; attempt<3; attempt++){
+    try {
+      const d = await jsonp(`${API}?action=read`);
+      if(d) return d;
+    } catch(e) { console.warn('apiRead attempt '+(attempt+1)+' failed',e); }
+  }
+  return null;
 }
 
 async function apiAddVariable(row) {
@@ -261,6 +310,7 @@ async function submitPin(){
   if(!existing){
     const hashed = hashPin(pin);
     setCfg(`pin_${pickingUser}`, hashed);
+    saveCache();
     await jsonp(`${API}?action=setpin&key=pin_${pickingUser}&value=${hashed}`);
     loginAs(pickingUser);
   } else {
@@ -361,6 +411,7 @@ function renderDash(){
 async function deleteVariable(id){
   if(!confirm('Supprimer cette dépense ?')) return;
   DB.variable=DB.variable.filter(c=>c.id!==id);
+  saveCache();
   renderDash();
   await apiDelVariable(id);
 }
@@ -406,6 +457,7 @@ async function saveVariable(){
   btn.disabled=true;
   const entry = {id:uid(),person:addPerson,category:cat,label,amount,date:date,month:date.slice(0,7)};
   DB.variable.push(entry);
+  saveCache();
   await apiAddVariable(entry);
   btn.innerHTML='✓ Enregistré !';
   btn.style.background='#15803d';
@@ -456,12 +508,14 @@ async function saveFixed(){
   const entry={id:editFixedId||uid(),person:fixedPerson,category:cat,label,amount,startMonth};
   if(editFixedId) DB.fixed=DB.fixed.map(c=>c.id===editFixedId?entry:c);
   else DB.fixed.push(entry);
+  saveCache();
   hideFixedForm(); renderFixed(); await apiAddFixed(entry);
 }
 
 async function deleteFixed(id){
   if(!confirm('Supprimer cette charge fixe ?')) return;
   DB.fixed=DB.fixed.filter(c=>c.id!==id);
+  saveCache();
   renderFixed(); await apiDelFixed(id);
 }
 
@@ -532,8 +586,10 @@ async function changePin(){
   const msg=document.getElementById('config-msg');
   if(p1.length<4){msg.style.color='#ef4444';msg.textContent='Minimum 4 chiffres';return;}
   if(p1!==p2){msg.style.color='#ef4444';msg.textContent='Les codes ne correspondent pas';return;}
-  setCfg(`pin_${currentUser}`,hashPin(p1));
-  await apiWrite();
+  const hashed=hashPin(p1);
+  setCfg(`pin_${currentUser}`,hashed);
+  saveCache();
+  await jsonp(`${API}?action=setpin&key=pin_${currentUser}&value=${hashed}`);
   document.getElementById('new-pin1').value='';
   document.getElementById('new-pin2').value='';
   msg.style.color='#4ade80'; msg.textContent='✓ Code modifié';
@@ -561,18 +617,36 @@ function parseDate(val) {
   return s.slice(0,10);
 }
 
+function applyServerData(d){
+  DB.config = d.config||[];
+  DB.fixed = (d.fixed||[]).map(r=>({...r, amount:Number(r.amount), startMonth:parseDate(r.startMonth).slice(0,7)}));
+  DB.variable = (d.variable||[]).map(r=>{
+    const date = parseDate(r.date);
+    return {...r, amount:Number(r.amount), date, month:date.slice(0,7)};
+  });
+}
+
 async function init(){
+  // 1) Affichage instantané depuis la copie de secours locale
+  const hadCache = loadCache();
+  if(hadCache) refreshUI();
+  // 2) Lecture du Google Sheet (source de vérité)
+  setStatus('loading');
   try {
     const d = await apiRead();
     if(d && !d.error){
-      DB.config = d.config||[];
-      DB.fixed = (d.fixed||[]).map(r=>({...r, amount:Number(r.amount), startMonth:parseDate(r.startMonth).slice(0,7)}));
-      DB.variable = (d.variable||[]).map(r=>{
-        const date = parseDate(r.date);
-        return {...r, amount:Number(r.amount), date, month:date.slice(0,7)};
-      });
+      applyServerData(d);
+      saveCache();
+      refreshUI();
+      setStatus('ok');
+    } else {
+      throw new Error('read failed / empty');
     }
-  } catch(e){ console.warn('Init error',e); }
+  } catch(e){
+    console.warn('Init error',e);
+    if(hadCache) setStatus('offline');
+    else setStatus('error','⛔ Pas de connexion — réessaie dans un instant');
+  }
 }
 
 init();
